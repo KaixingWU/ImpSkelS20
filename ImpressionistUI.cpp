@@ -356,6 +356,20 @@ void ImpressionistUI::cb_sizeSlides(Fl_Widget* o, void* v)
 	((ImpressionistUI*)(o->user_data()))->m_nSize=int( ((Fl_Slider *)o)->value() ) ;
 }
 
+//updates the brush line width to use from the value of the line width slider
+//called by the UI when the line width slider is moved
+void ImpressionistUI::cb_lineWidthSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nLineWidth = int(((Fl_Slider*)o)->value());
+}
+
+//updates the brush line angle to use from the value of the line angle slider
+//called by the UI when the line angle slider is moved
+void ImpressionistUI::cb_lineAngleSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nLineAngle = int(((Fl_Slider*)o)->value());
+}
+
 //---------------------------------- per instance functions --------------------------------------
 
 //------------------------------------------------
@@ -402,6 +416,18 @@ void ImpressionistUI::setDocument(ImpressionistDoc* doc)
 int ImpressionistUI::getSize()
 {
 	return m_nSize;
+}
+
+//Return the brush line width
+int ImpressionistUI::getLineWidth()
+{
+	return m_nLineWidth;
+}
+
+//Return the brush line angle
+int ImpressionistUI::getLineAngle()
+{
+	return m_nLineAngle;
 }
 
 //-------------------------------------------------
@@ -491,6 +517,8 @@ ImpressionistUI::ImpressionistUI() {
 	// init values
 
 	m_nSize = 10;
+	m_nLineWidth = 1;
+	m_nLineAngle = 0;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -566,15 +594,15 @@ ImpressionistUI::ImpressionistUI() {
 	// Add brush line width slider to the dialog
 	m_BrushLineWidthSlider = new Fl_Value_Slider(10, 110, 300, 20, "Line Width");
 	m_BrushLineWidthSlider->user_data((void*)(this));	// record self to be used by static callback functions
-	m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
-	m_BrushLineWidthSlider->labelfont(FL_COURIER);
+	m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER); //the button
+	m_BrushLineWidthSlider->labelfont(FL_COURIER); //type of letters
 	m_BrushLineWidthSlider->labelsize(12);
 	m_BrushLineWidthSlider->minimum(1);
 	m_BrushLineWidthSlider->maximum(40);
-	m_BrushLineWidthSlider->step(1);
-	m_BrushLineWidthSlider->value(m_nSize);
+	m_BrushLineWidthSlider->step(1); // value change each step
+	m_BrushLineWidthSlider->value(m_nLineWidth);//line width
 	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
-	m_BrushLineWidthSlider->callback(cb_sizeSlides);
+	m_BrushLineWidthSlider->callback(cb_lineWidthSlides);
 
 	// Add brush line angle slider to the dialog
 	m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
@@ -585,9 +613,9 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushLineAngleSlider->minimum(0);
 	m_BrushLineAngleSlider->maximum(359);
 	m_BrushLineAngleSlider->step(1);
-	m_BrushLineAngleSlider->value(m_nSize);
+	m_BrushLineAngleSlider->value(m_nLineAngle);//line angle
 	m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
-	m_BrushLineAngleSlider->callback(cb_sizeSlides);
+	m_BrushLineAngleSlider->callback(cb_lineAngleSlides);
 
 	// Add brush alpha slider to the dialog
 	m_BrushAlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");

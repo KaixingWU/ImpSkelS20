@@ -41,6 +41,15 @@ public:
 	int x, y;
 };
 
+class Line
+{
+public:
+	Line() {};
+	Line(int xx, int yy, int an) { x = xx; y = yy; angle = an; };
+
+	int x, y, angle;
+};
+
 class ImpBrush 
 {
 protected:

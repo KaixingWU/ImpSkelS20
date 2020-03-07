@@ -65,6 +65,8 @@ public:
 	// Interface to get attribute
 
 	int					getSize();
+	int					getLineWidth();
+	int					getLineAngle();
 	void				setSize(int size);
 
 private:
@@ -72,6 +74,8 @@ private:
 
 	// All attributes here
 	int		m_nSize;
+	int		m_nLineWidth;
+	int		m_nLineAngle;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -100,7 +104,8 @@ private:
 	static void	cb_Paint_button(Fl_Widget* o, void* v);
 	static void	cb_Do_it_button(Fl_Widget* o, void* v);
 	static void	cb_sizeSlides(Fl_Widget* o, void* v);
-	
+	static void cb_lineWidthSlides(Fl_Widget* o, void* v);
+	static void cb_lineAngleSlides(Fl_Widget* o, void* v);
 };
 
 #endif
