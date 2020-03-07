@@ -136,6 +136,28 @@ int ImpressionistDoc::loadImage(char *iname)
 	return 1;
 }
 
+int ImpressionistDoc::loadAnotherImage(char* iname)
+{
+	// try to open the image to read
+	unsigned char* data;
+	int				width,
+					height;
+
+	//image error
+	if ((data = readBMP(iname, width, height)) == NULL)
+	{
+		fl_alert("Can't load bitmap file");
+		return 0;
+	}
+
+	// reflect the fact of loading the new image
+	m_nWidth = width;
+	m_nPaintWidth = width;
+	m_nHeight = height;
+	m_nPaintHeight = height;
+
+
+}
 
 //----------------------------------------------------------------
 // Save the specified image
