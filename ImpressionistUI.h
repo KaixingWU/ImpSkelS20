@@ -27,18 +27,33 @@ public:
 	ImpressionistUI();
 
 	// The FLTK widgets
-	Fl_Window*			m_mainWindow;
-	Fl_Menu_Bar*		m_menubar;
-								
-	PaintView*			m_paintView;
-	OriginalView*		m_origView;
+	Fl_Window* m_mainWindow;
+	Fl_Menu_Bar* m_menubar;
 
-// for brush dialog
-	Fl_Window*			m_brushDialog;
-	Fl_Choice*			m_BrushTypeChoice;
+	PaintView* m_paintView;
+	OriginalView* m_origView;
 
-	Fl_Slider*			m_BrushSizeSlider;
-	Fl_Button*          m_ClearCanvasButton;
+	// for brush dialog
+	Fl_Window* m_brushDialog;
+	Fl_Choice* m_BrushTypeChoice;
+	Fl_Choice* m_StrokeDirectionTypeChoice;
+
+	Fl_Slider* m_BrushSizeSlider;
+	Fl_Slider* m_BrushLineWidthSlider;
+	Fl_Slider* m_BrushLineAngleSlider;
+	Fl_Slider* m_BrushAlphaSlider;
+	Fl_Slider* m_BrushSpacingSlider;
+	Fl_Slider* m_BrushEdgeSlider;
+
+	Fl_Group* m_SpacingGroup;
+	Fl_Group* m_EdgeGroup;
+
+	Fl_Button* m_ClearCanvasButton;
+	Fl_Light_Button* m_EdgeClippingButton;
+	Fl_Light_Button* m_AnotherGradientButton;
+	Fl_Light_Button* m_SizeRandButton;
+	Fl_Button* m_PaintButton;
+	Fl_Button* m_DoitButton;
 
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
@@ -61,6 +76,7 @@ private:
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
 	static Fl_Menu_Item		brushTypeMenu[NUM_BRUSH_TYPE+1];
+	static Fl_Menu_Item		strokeDirectionTypeMenu[NUM_STROKE_TYPE + 1];
 
 	static ImpressionistUI*	whoami(Fl_Menu_* o);
 
@@ -76,7 +92,13 @@ private:
 	static void	cb_exit(Fl_Menu_* o, void* v);
 	static void	cb_about(Fl_Menu_* o, void* v);
 	static void	cb_brushChoice(Fl_Widget* o, void* v);
+	static void	cb_StrokeDirectionChoice(Fl_Widget* o, void* v);
 	static void	cb_clear_canvas_button(Fl_Widget* o, void* v);
+	static void	cb_Edge_Clipping_button(Fl_Widget* o, void* v);
+	static void	cb_Another_Gradient_button(Fl_Widget* o, void* v);
+	static void	cb_Size_Rand_button(Fl_Widget* o, void* v);
+	static void	cb_Paint_button(Fl_Widget* o, void* v);
+	static void	cb_Do_it_button(Fl_Widget* o, void* v);
 	static void	cb_sizeSlides(Fl_Widget* o, void* v);
 	
 };
