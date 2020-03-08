@@ -32,12 +32,7 @@ void CirclesBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	glBegin(GL_TRIANGLES);
-	SetColor(source);
-
-	glVertex2d(target.x, target.y);
-
-	glEnd();
+    DrawCircle(source, target);
 }
 
 void CirclesBrush::BrushEnd(const Point source, const Point target)
@@ -58,15 +53,21 @@ void CirclesBrush::DrawCircle(const Point source, const Point target)
     circleVertex[1] = target.y;
 
     for (int i = 0; i < VERTEX_DATA_NUM; i++) {
-        circleVertex[2 * i + 2] = (float)(target.x + radius * cos(radian * i));
-        circleVertex[2 * i + 1 + 2] = (float)(target.y + radius * sin(radian * i));
+        circleVertex[2 * i + 2] = (GLfloat)(target.x + radius * cos(radian * i));
+        circleVertex[2 * i + 1 + 2] = (GLfloat)(target.y + radius * sin(radian * i));
     }
 
-    circleVertex[VERTEX_DATA_NUM * 2 + 2] = (float)(target.x + radius * cos(radian));
-    circleVertex[VERTEX_DATA_NUM * 2 + 3] = (float)(target.y + radius * sin(radian));
-
+    circleVertex[VERTEX_DATA_NUM * 2 + 2] = (GLfloat)(target.x + radius * cos(radian));
+    circleVertex[VERTEX_DATA_NUM * 2 + 3] = (GLfloat)(target.y + radius * sin(radian));
 	glBegin(GL_TRIANGLE_FAN);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, VERTEX_DATA_NUM + 2);
+
+    for (int k = 0; k < VERTEX_DATA_NUM+2; k++) 
+    {
+        SetColor(source);
+        glVertex2f(circleVertex[2 * k], circleVertex[2 * k+1]);//output vertex
+    }
+
     glEnd();
+   
 }
 

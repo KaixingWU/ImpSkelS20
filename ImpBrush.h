@@ -45,9 +45,9 @@ class Line
 {
 public:
 	Line() {};
-	Line(int xx, int yy, int an) { x = xx; y = yy; angle = an; };
+	Line(double xx, double yy, int an) { x = xx; y = yy; angle = an; };
 
-	int x, y, angle;
+	double x, y, angle;
 };
 
 class ImpBrush 
