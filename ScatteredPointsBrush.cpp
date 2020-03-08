@@ -17,10 +17,8 @@ void ScatteredPointsBrush::BrushBegin(const Point source, const Point target)
 
 	int size = pDoc->getSize();
 
-
-
-	glPointSize((float)size);
-
+	glPointSize(1.0);
+	
 	BrushMove(source, target);
 }
 
@@ -34,8 +32,31 @@ void ScatteredPointsBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
+	int size = pDoc->getSize();
+	int radio = (int)((0.7 + 1 / 5 * frand()) * size); //by row and column
+	int end = radio * radio;
+	for (int i = 0; i < end; i++) {
+
+		Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
+		Point b(target.x - 0.5 * size + (int)(frand() * size), target.y - 0.5 * size + (int)(frand() * size));
+		DrawOnePoint(a,b);
+
+	}
+	
+}
+
+void ScatteredPointsBrush::DrawOnePoint(const Point source, const Point target)
+{
+	ImpressionistDoc* pDoc = GetDocument();
+	ImpressionistUI* dlg = pDoc->m_pUI;
+
+	if (pDoc == NULL) {
+		printf("PointBrush::BrushMove  document is NULL\n");
+		return;
+	}
+	glPointSize(1.0);
 	glBegin(GL_POINTS);
-	SetColor(source);
+	SetColor(target);
 
 	glVertex2d(target.x, target.y);
 

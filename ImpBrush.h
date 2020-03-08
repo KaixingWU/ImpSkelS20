@@ -40,7 +40,7 @@ public:
 
 	int x, y;
 };
-
+/*
 class Line
 {
 public:
@@ -49,7 +49,7 @@ public:
 
 	double x, y, angle;
 };
-
+*/
 class ImpBrush 
 {
 protected:
