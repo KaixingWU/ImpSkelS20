@@ -18,7 +18,8 @@ void ScatteredCirclesBrush::BrushBegin(const Point source, const Point target)
 
 
 
-	glPointSize((float)size);
+	//glPointSize((float)size);
+
 
 	BrushMove(source, target);
 }
@@ -33,10 +34,11 @@ void ScatteredCirclesBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	glBegin(GL_POINTS);
+	glBegin(GL_POLYGON);
 	SetColor(source);
-
-	glVertex2d(target.x, target.y);
+	glVertex2i(target.x, target.y);
+	glVertex2i(target.x+1, target.y+1);
+	glVertex2i(target.x-1, target.y+0.5);
 
 	glEnd();
 }

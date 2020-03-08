@@ -4,6 +4,8 @@
 #define CIRCLESBRUSH_H
 
 #include "ImpBrush.h"
+
+static int VERTEX_DATA_NUM = 360;
 class CirclesBrush : public ImpBrush
 {
 public:
@@ -13,7 +15,10 @@ public:
 	void BrushMove(const Point source, const Point target);
 	void BrushEnd(const Point source, const Point target);
 	char* BrushName(void);
-
+	void DrawCircle(const Point source, const Point target);
+	float* circleVertex;
+	float radian;
+	float radius;
 };
 
 
