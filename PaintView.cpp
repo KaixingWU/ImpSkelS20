@@ -27,6 +27,8 @@
 static int		eventToDo;
 static int		isAnEvent=0;
 static Point	coord;
+static Point	rightClickStart;
+static Point	rightClickEnd;
 
 PaintView::PaintView(int			x, 
 					 int			y, 
@@ -61,22 +63,26 @@ void PaintView::draw()
 		glClear( GL_COLOR_BUFFER_BIT );
 	}
 
+	//we are not using scrollable window. so ignore it
 	Point scrollpos;// = GetScrollPosition();
 	scrollpos.x = 0;
 	scrollpos.y	= 0;
 
+	//display window size
 	m_nWindowWidth	= w();
 	m_nWindowHeight	= h();
 
+	//drawing canvas size
 	int drawWidth, drawHeight;
 	drawWidth = min( m_nWindowWidth, m_pDoc->m_nPaintWidth );
 	drawHeight = min( m_nWindowHeight, m_pDoc->m_nPaintHeight );
 
+	//start row in the displayed window
 	int startrow = m_pDoc->m_nPaintHeight - (scrollpos.y + drawHeight);
 	if ( startrow < 0 ) startrow = 0;
 
-	m_pPaintBitstart = m_pDoc->m_ucPainting + 
-		3 * ((m_pDoc->m_nPaintWidth * startrow) + scrollpos.x);
+
+	m_pPaintBitstart = m_pDoc->m_ucPainting + 3 * ((m_pDoc->m_nPaintWidth * startrow) + scrollpos.x);
 
 	m_nDrawWidth	= drawWidth;
 	m_nDrawHeight	= drawHeight;
@@ -117,12 +123,16 @@ void PaintView::draw()
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
+			rightClickStart.x = target.x;
+			rightClickStart.y = target.y;
 
 			break;
 		case RIGHT_MOUSE_DRAG:
 
 			break;
 		case RIGHT_MOUSE_UP:
+			rightClickEnd.x = target.x;
+			rightClickEnd.y = target.y;
 
 			break;
 

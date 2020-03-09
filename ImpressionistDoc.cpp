@@ -76,6 +76,17 @@ void ImpressionistDoc::setBrushType(int type)
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[type];
 }
 
+void ImpressionistDoc::setDirectionType(int type) 
+{
+	if (type < 3 ) {
+		setBrushType(1);//lines
+	}
+	else {
+		setBrushType(4);//scattered lines
+	}
+	
+}
+
 //---------------------------------------------------------
 // Returns the size of the brush.
 //---------------------------------------------------------

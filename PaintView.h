@@ -34,12 +34,15 @@ public:
 
 private:
 	GLvoid* m_pPaintBitstart;
+			//in the underneath drawing canvas
 	int		m_nDrawWidth,
 			m_nDrawHeight,
+			//in displayed window
 			m_nStartRow, 
 			m_nEndRow,
 			m_nStartCol, 
 			m_nEndCol,
+
 			m_nWindowWidth, 
 			m_nWindowHeight;
 

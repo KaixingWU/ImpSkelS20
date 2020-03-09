@@ -294,7 +294,7 @@ void ImpressionistUI::cb_StrokeDirectionChoice(Fl_Widget* o, void* v)
 	int type = (int)v;
 
 
-	pDoc->setBrushType(type);
+	pDoc->setDirectionType(type);
 }
 
 
