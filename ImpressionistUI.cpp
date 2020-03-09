@@ -4,7 +4,7 @@
 // The user interface part for the program.
 //
 
-
+#include <FL/Fl_Color_Chooser.H>
 #include <FL/fl_ask.h>
 
 #include <math.h>
@@ -370,6 +370,20 @@ void ImpressionistUI::cb_lineAngleSlides(Fl_Widget* o, void* v)
 	((ImpressionistUI*)(o->user_data()))->m_nLineAngle = int(((Fl_Slider*)o)->value());
 }
 
+void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
+{
+	double value = ((Fl_Slider*)o)->value();
+	int res1 = (int)(value * 255);
+	((ImpressionistUI*)(o->user_data()))->m_nAlpha = res1;
+}
+
+void ImpressionistUI::cb_color_chooser(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nColorR = ((Fl_Color_Chooser*)o)->r();
+	((ImpressionistUI*)(o->user_data()))->m_nColorG = ((Fl_Color_Chooser*)o)->g();
+	((ImpressionistUI*)(o->user_data()))->m_nColorB = ((Fl_Color_Chooser*)o)->b();
+}
+
 //---------------------------------- per instance functions --------------------------------------
 
 //------------------------------------------------
@@ -430,6 +444,28 @@ int ImpressionistUI::getLineAngle()
 	return m_nLineAngle;
 }
 
+int ImpressionistUI::getAlpha()
+{
+	return m_nAlpha;
+}
+
+double ImpressionistUI::getColorR()
+{
+	return m_nColorR;
+}
+
+double ImpressionistUI::getColorG()
+{
+	return m_nColorG;
+}
+
+double ImpressionistUI::getColorB()
+{
+	return m_nColorB;
+}
+
+
+
 //-------------------------------------------------
 // Set the brush size
 //-------------------------------------------------
@@ -439,6 +475,21 @@ void ImpressionistUI::setSize( int size )
 
 	if (size<=40) 
 		m_BrushSizeSlider->value(m_nSize);
+}
+
+void ImpressionistUI::setColorR(double R)
+{
+	m_nColorR = R;
+}
+
+void ImpressionistUI::setColorG(double G)
+{
+	m_nColorG = G;
+}
+
+void ImpressionistUI::setColorB(double B)
+{
+	m_nColorB = B;
 }
 
 // Main menu definition
@@ -625,10 +676,10 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushAlphaSlider->labelsize(12);
 	m_BrushAlphaSlider->minimum(0.00);
 	m_BrushAlphaSlider->maximum(1.00);
-	m_BrushAlphaSlider->step(1);
+	m_BrushAlphaSlider->step(0.01);
 	m_BrushAlphaSlider->value(m_nSize);
 	m_BrushAlphaSlider->align(FL_ALIGN_RIGHT);
-	m_BrushAlphaSlider->callback(cb_sizeSlides);
+	m_BrushAlphaSlider->callback(cb_alphaSlides);
 
 	// Add brush spacing slider to the dialog
 	m_BrushSpacingSlider = new Fl_Value_Slider(10, 250, 140, 20, "Spacing");

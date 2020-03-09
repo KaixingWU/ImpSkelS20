@@ -30,6 +30,11 @@ public:
 	int		getSize();						// get the UI size
 	int		getLineWidth();					// get the UI line width
 	int		getLineAngle();					// get the UI line angle
+	int	    getAlpha();						// get the UI Alpha
+	double  getColorR();					// get the UI ColorR
+	double  getColorG();					// get the UI ColorG
+	double  getColorB();					// get the UI ColorB
+
 
 	void	setSize(int size);				// set the UI size
 	char*	getImageName();					// get the current image name

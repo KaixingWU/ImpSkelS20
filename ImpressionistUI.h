@@ -68,6 +68,15 @@ public:
 	int					getLineWidth();
 	int					getLineAngle();
 	void				setSize(int size);
+	int					getAlpha();
+	void				setAlpha(int alpha);
+
+	double				getColorR();
+	double				getColorG();
+	double				getColorB();
+	void				setColorR(double R);
+	void				setColorG(double G);
+	void				setColorB(double B);
 
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
@@ -76,6 +85,13 @@ private:
 	int		m_nSize;
 	int		m_nLineWidth;
 	int		m_nLineAngle;
+	double	m_nAlpha;
+	double	m_nColorR;
+	double  m_nColorG;
+	double  m_nColorB;
+	bool	m_bEdgeClipping;
+	int		m_nEdgeThreshold;
+	int		m_nAutoSpace;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -106,6 +122,9 @@ private:
 	static void	cb_sizeSlides(Fl_Widget* o, void* v);
 	static void cb_lineWidthSlides(Fl_Widget* o, void* v);
 	static void cb_lineAngleSlides(Fl_Widget* o, void* v);
+	static void cb_alphaSlides(Fl_Widget* o, void* v);
+	static void cb_color_chooser(Fl_Widget* o, void* v);
+	
 };
 
 #endif

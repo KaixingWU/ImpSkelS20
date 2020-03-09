@@ -96,6 +96,26 @@ int ImpressionistDoc::getLineAngle()
 	return m_pUI->getLineAngle();
 }
 
+int ImpressionistDoc::getAlpha()
+{
+	return m_pUI->getAlpha();
+}
+
+double ImpressionistDoc::getColorR()
+{
+	return m_pUI->getColorR();
+}
+
+double ImpressionistDoc::getColorG()
+{
+	return m_pUI->getColorG();
+}
+
+double ImpressionistDoc::getColorB()
+{
+	return m_pUI->getColorB();
+}
+
 //---------------------------------------------------------
 // Load the specified image
 // This is called by the UI when the load image button is 
