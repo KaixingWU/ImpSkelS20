@@ -35,6 +35,7 @@ ImpressionistDoc::ImpressionistDoc()
 	// create one instance of each brush
 	ImpBrush::c_nBrushCount	= NUM_BRUSH_TYPE;
 	ImpBrush::c_pBrushes	= new ImpBrush* [ImpBrush::c_nBrushCount];
+	
 
 	ImpBrush::c_pBrushes[BRUSH_POINTS]	= new PointBrush( this, "Points" );
 
@@ -75,7 +76,7 @@ void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[type];
 }
-
+/*
 void ImpressionistDoc::setDirectionType(int type) 
 {
 	if (type < 3 ) {
@@ -86,7 +87,7 @@ void ImpressionistDoc::setDirectionType(int type)
 	}
 	
 }
-
+*/
 //---------------------------------------------------------
 // Returns the size of the brush.
 //---------------------------------------------------------

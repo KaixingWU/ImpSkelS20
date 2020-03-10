@@ -29,6 +29,21 @@ static int		isAnEvent=0;
 static Point	coord;
 static Point	rightClickStart;
 static Point	rightClickEnd;
+static bool		useRightClick = 0;
+
+bool isRightClick() {
+	return useRightClick;
+}
+
+Point startRightPoint() {
+	return rightClickStart;
+}
+
+Point endRightPoint() {
+	return rightClickEnd;
+}
+
+
 
 PaintView::PaintView(int			x, 
 					 int			y, 

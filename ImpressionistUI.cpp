@@ -292,9 +292,8 @@ void ImpressionistUI::cb_StrokeDirectionChoice(Fl_Widget* o, void* v)
 	ImpressionistDoc* pDoc = pUI->getDocument();
 
 	int type = (int)v;
-
-
-	pDoc->setDirectionType(type);
+	
+	pDoc->m_pDirectionType = type;
 }
 
 
@@ -475,6 +474,14 @@ void ImpressionistUI::setSize( int size )
 
 	if (size<=40) 
 		m_BrushSizeSlider->value(m_nSize);
+}
+
+void ImpressionistUI::setLineAngle(int angle) {
+	m_nLineAngle = angle;
+
+	if (angle<360) {
+		m_BrushLineAngleSlider->value(m_nLineAngle);
+	}
 }
 
 void ImpressionistUI::setColorR(double R)
