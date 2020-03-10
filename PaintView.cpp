@@ -27,22 +27,6 @@
 static int		eventToDo;
 static int		isAnEvent=0;
 static Point	coord;
-static Point	rightClickStart;
-static Point	rightClickEnd;
-static bool		useRightClick = 0;
-
-bool isRightClick() {
-	return useRightClick;
-}
-
-Point startRightPoint() {
-	return rightClickStart;
-}
-
-Point endRightPoint() {
-	return rightClickEnd;
-}
-
 
 
 PaintView::PaintView(int			x, 
@@ -138,17 +122,29 @@ void PaintView::draw()
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
-			rightClickStart.x = target.x;
-			rightClickStart.y = target.y;
+			
+			m_pDoc->rightStart(target);
 
 			break;
 		case RIGHT_MOUSE_DRAG:
+			RestoreContent();
+			m_pDoc->rightEnd(target);
+			glLineWidth(1);
+			glBegin(GL_LINES);
+			glColor3f(255,0 , 0);
+			glVertex2d(m_pDoc->rightStartPoint.x, m_pDoc->rightStartPoint.y);
+			glVertex2d(m_pDoc->rightEndPoint.x, m_pDoc->rightEndPoint.y);
+			glEnd();
 
 			break;
 		case RIGHT_MOUSE_UP:
-			rightClickEnd.x = target.x;
-			rightClickEnd.y = target.y;
-
+			
+			m_pDoc->rightEnd(target);
+			if (m_pDoc->getBrushType() == 1 || m_pDoc->getBrushType() == 4) {
+				m_pDoc->setLineAngle(m_pDoc->computeLineAngle());
+				m_pDoc->setSize(m_pDoc->computeLineSize());
+			}
+			RestoreContent();
 			break;
 
 		default:

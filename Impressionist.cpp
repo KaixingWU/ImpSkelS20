@@ -15,6 +15,8 @@
 
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
+#include "LinesBrush.h"
+#include "PaintView.h"
 
 ImpressionistUI *impUI;
 ImpressionistDoc *impDoc;
