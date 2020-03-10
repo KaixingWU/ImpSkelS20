@@ -55,6 +55,8 @@ void ScatteredPointsBrush::DrawOnePoint(const Point source, const Point target)
 		return;
 	}
 	glPointSize(1.0);
+
+	Blend();
 	glBegin(GL_POINTS);
 	SetColor(target);
 

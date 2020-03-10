@@ -69,8 +69,8 @@ public:
 	int					getLineAngle();
 	void				setSize(int size);
 	void				setLineAngle(int angle);
-	int					getAlpha();
-	void				setAlpha(int alpha);
+	double				getAlpha();
+	void				setAlpha(double alpha);
 
 	double				getColorR();
 	double				getColorG();

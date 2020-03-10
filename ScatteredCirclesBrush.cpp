@@ -37,6 +37,7 @@ void ScatteredCirclesBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
+    Blend();
     DrawScatteredCircle(source, target);
 }
 

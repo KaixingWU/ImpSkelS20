@@ -59,6 +59,7 @@ void ScatteredLinesBrush::DrawOneLine(const Point source, const Point target)
 	int size = pDoc->getSize();
 	int lineAngle = pDoc->getLineAngle();
 
+	Blend();
 	glBegin(GL_LINES);
 	SetColor(source);
 	glVertex2d(source.x - size / 2 * cos(lineAngle * M_PI / 180), source.y - size / 2 * sin(lineAngle * M_PI / 180));

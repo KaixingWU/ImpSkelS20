@@ -65,6 +65,8 @@ public:
 	void SetColor( const Point source );
 	void SetColor(const Point source, double alpha);
 
+	void Blend();
+
 	// get Doc to communicate with it
 	ImpressionistDoc* GetDocument( void );
 

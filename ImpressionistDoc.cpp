@@ -108,7 +108,7 @@ int ImpressionistDoc::getLineAngle()
 	return m_pUI->getLineAngle();
 }
 
-int ImpressionistDoc::getAlpha()
+double ImpressionistDoc::getAlpha()
 {
 	return m_pUI->getAlpha();
 }

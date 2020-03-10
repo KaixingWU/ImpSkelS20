@@ -40,6 +40,7 @@ void PointBrush::BrushMove( const Point source, const Point target )
 		return;
 	}
 
+	Blend();
 	glBegin( GL_POINTS );
 		SetColor( source );
 

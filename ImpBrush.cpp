@@ -7,6 +7,8 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "ImpBrush.h"
+#include <iostream>
+using namespace std;
 
 // Static class member initializations
 int			ImpBrush::c_nBrushCount	= 0;
@@ -43,14 +45,21 @@ char* ImpBrush::BrushName(void)
 void ImpBrush::SetColor (const Point source)
 {
 	ImpressionistDoc* pDoc = GetDocument();
+	double alpha = pDoc->getAlpha();
 
+	//GLubyte color[3];
 
-	GLubyte color[3];
-
-	memcpy ( color, pDoc->GetOriginalPixel( source ), 3 );
+	//memcpy ( color, pDoc->GetOriginalPixel( source ), 3 );
  
-	glColor3ubv( color );
+	//glColor3ubv( color );
+	SetColor(source, alpha);
+}
 
+void ImpBrush::Blend()
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glShadeModel(GL_FLAT);
 }
 
 void ImpBrush::SetColor(const Point source, double alpha)
@@ -65,10 +74,12 @@ void ImpBrush::SetColor(const Point source, double alpha)
 	double chosen_B = pDoc->getColorB();
 
 
-	color[0] = (int)(color[0] * chosen_R);
+	/*color[0] = (int)(color[0] * chosen_R);
 	color[1] = (int)(color[1] * chosen_G);
-	color[2] = (int)(color[2] * chosen_B);
+	color[2] = (int)(color[2] * chosen_B);*/
 
 	color[3] = alpha;
-	glColor4ubv(color);
+	//glColor4ubv(color);
+	//cout << alpha << endl;
+	glColor4ub(color[0], color[1], color[2], static_cast<unsigned char>(double(alpha)));
 }

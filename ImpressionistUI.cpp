@@ -443,7 +443,7 @@ int ImpressionistUI::getLineAngle()
 	return m_nLineAngle;
 }
 
-int ImpressionistUI::getAlpha()
+double ImpressionistUI::getAlpha()
 {
 	return m_nAlpha;
 }
@@ -497,6 +497,11 @@ void ImpressionistUI::setColorG(double G)
 void ImpressionistUI::setColorB(double B)
 {
 	m_nColorB = B;
+}
+
+void ImpressionistUI::setAlpha(double alpha) 
+{
+	m_nAlpha = alpha;
 }
 
 // Main menu definition
@@ -577,6 +582,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nSize = 10;
 	m_nLineWidth = 1;
 	m_nLineAngle = 0;
+	m_nAlpha = 255;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -684,7 +690,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushAlphaSlider->minimum(0.00);
 	m_BrushAlphaSlider->maximum(1.00);
 	m_BrushAlphaSlider->step(0.01);
-	m_BrushAlphaSlider->value(m_nSize);
+	m_BrushAlphaSlider->value(1);
 	m_BrushAlphaSlider->align(FL_ALIGN_RIGHT);
 	m_BrushAlphaSlider->callback(cb_alphaSlides);
 

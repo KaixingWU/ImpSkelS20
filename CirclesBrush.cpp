@@ -44,7 +44,7 @@ void CirclesBrush::DrawCircle(const Point source, const Point target)
     ImpressionistDoc* pDoc = GetDocument();
     ImpressionistUI* dlg = pDoc->m_pUI;
     int size = pDoc->getSize();
-    double alpha = pDoc->getAlpha();
+    //double alpha = pDoc->getAlpha();
 
     circleVertex = new float[VERTEX_DATA_NUM * 2 + 4];
     radian = (float)(2 * M_PI / VERTEX_DATA_NUM);
@@ -60,11 +60,14 @@ void CirclesBrush::DrawCircle(const Point source, const Point target)
 
     circleVertex[VERTEX_DATA_NUM * 2 + 2] = (GLfloat)(target.x + radius * cos(radian));
     circleVertex[VERTEX_DATA_NUM * 2 + 3] = (GLfloat)(target.y + radius * sin(radian));
-	glBegin(GL_TRIANGLE_FAN);
-
+	
+    Blend();
+    
+    glBegin(GL_TRIANGLE_FAN);
+   
     for (int k = 0; k < VERTEX_DATA_NUM+2; k++) 
     {
-        SetColor(source,alpha);
+        SetColor(source);
         glVertex2f(circleVertex[2 * k], circleVertex[2 * k+1]);//output vertex
     }
 
