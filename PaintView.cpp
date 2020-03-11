@@ -107,7 +107,7 @@ void PaintView::draw()
 		Point target(coord.x, m_nWindowHeight - coord.y);
 
 		// This is the event handler
-	
+		flag = true;
 			switch (eventToDo)
 			{
 

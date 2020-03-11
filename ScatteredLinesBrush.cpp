@@ -2,6 +2,8 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include <cmath>
+#include <iostream>
+using namespace std;
 
 
 extern float frand();
@@ -38,15 +40,30 @@ void ScatteredLinesBrush::BrushMove(const Point source, const Point target, int 
 
 	int size = pDoc->getSize();
 	int lineAngle = pDoc->getLineAngle();
+	//cout <<"out"<< DirectionType << endl;
+	switch (DirectionType)
+	{
+		//cout << DirectionType << endl;
+		case 0:
+			for (int i = 0; i < rand() % 3 + 2; i++)
+			{
+				Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
+				//Point b(target.x - 0.5 * size + (int)(frand() * size), target.y - 0.5 * size + (int)(frand() * size));
+				DrawOneLine(a, a);
+			}
+			break;
+		case 1:// brush direction choice
+		{
+		}break;
+		case 2:
+		{
+			DirectionBrush(source, target);
+		}break;
 
-	for (int i = 0; i < rand() % 3 + 2; i++) {
-		Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
-		//Point b(target.x - 0.5 * size + (int)(frand() * size), target.y - 0.5 * size + (int)(frand() * size));
-		DrawOneLine(a, a, DirectionType);
 	}
 }
 
-void ScatteredLinesBrush::DrawOneLine(const Point source, const Point target, int DirectionType)
+void ScatteredLinesBrush::DrawOneLine(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
@@ -64,15 +81,10 @@ void ScatteredLinesBrush::DrawOneLine(const Point source, const Point target, in
 	glBegin(GL_LINES);
 	SetColor(source);
 
-	if (DirectionType == 2) // brush direction choice
-	{
-		DirectionBrush(source, target);
-	}
-	else 
-	{
+	
 	glVertex2d(source.x - size / 2 * cos(lineAngle * M_PI / 180), source.y - size / 2 * sin(lineAngle * M_PI / 180));
 	glVertex2d(target.x + size / 2 * cos(lineAngle * M_PI / 180), target.y + size / 2 * sin(lineAngle * M_PI / 180));
-	}
+	
 	glEnd();
 }
 
@@ -94,33 +106,41 @@ void ScatteredLinesBrush::DirectionBrush(const Point source, const Point target)
 	int size = pDoc->getSize();
 	int lineAngle = pDoc->getLineAngle();
 
-
+	glBegin(GL_LINES);
 	while (flag)
 	{
 		pre_x = target.x;
 		pre_y = target.y;
 		flag = false;
-		glVertex2d(source.x, source.y);
-	}
-	glBegin(GL_LINES);
-	SetColor(source);
-	if ((target.y - pre_y != 0) && (target.x - pre_x != 0))
-	{
-		glVertex2d(source.x - size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))), source.y - size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))));
-		glVertex2d(source.x + size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))), source.y + size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))));
-	}
-	else if (target.y - pre_y == 0)
-	{
 		glVertex2d(source.x - size / 2, source.y);
 		glVertex2d(source.x + size / 2, source.y);
 	}
-	else if (target.x - pre_x == 0)
-	{
-		glVertex2d(source.x, source.y - size / 2);
-		glVertex2d(source.x, source.y + size / 2);
-	}
 
-	pre_x = target.x;
-	pre_y = target.y;
-	glEnd();
+	SetColor(source);
+	for (int i = 0; i < rand() % 3 + 3; i++)
+	{
+		//Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
+
+		int a = -0.5 * size + (int)(frand() * size);
+
+		if ((target.y - pre_y != 0) && (target.x - pre_x != 0))
+		{
+			glVertex2d(source.x - size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))) - 0.5 * size + (int)(frand() * size) + a, source.y - size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))) + a);
+			glVertex2d(source.x + size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))) - 0.5 * size + (int)(frand() * size) + a, source.y + size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))) + a);
+		}
+		else if (target.y - pre_y == 0)
+		{
+			glVertex2d(source.x - size / 2 + a, source.y + a);
+			glVertex2d(source.x + size / 2 + a, source.y + a);
+		}
+		else if (target.x - pre_x == 0)
+		{
+			glVertex2d(source.x + a, source.y - size / 2 + a);
+			glVertex2d(source.x + a, source.y + size / 2 + a);
+		}
+
+		pre_x = target.x;
+		pre_y = target.y;
+		glEnd();
+	}
 }

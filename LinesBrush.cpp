@@ -78,15 +78,16 @@ void LinesBrush::DirectionBrush(const Point source, const Point target)
 	int size = pDoc->getSize();
 	int lineAngle = pDoc->getLineAngle();
 
-
+	glBegin(GL_LINES);
 	while (flag)
 	{
 		pre_x = target.x;
 		pre_y = target.y;
 		flag = false;
-		glVertex2d(source.x, source.y);
+		glVertex2d(source.x - size / 2, source.y);
+		glVertex2d(source.x+ size / 2, source.y);
 	}
-	glBegin(GL_LINES);
+
 	SetColor(source);
 	if ((target.y - pre_y != 0) && (target.x - pre_x != 0))
 	{

@@ -49,7 +49,7 @@ ImpressionistDoc::ImpressionistDoc()
 
 	// make one of the brushes current
 	m_pCurrentBrush = ImpBrush::c_pBrushes[0];
-	m_pDirectionType = 1;
+	m_pDirectionType = 0;
 
 }
 
