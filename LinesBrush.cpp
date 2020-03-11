@@ -89,12 +89,8 @@ void LinesBrush::DirectionBrush(const Point source, const Point target)
 	}
 
 	SetColor(source);
-	if ((target.y - pre_y != 0) && (target.x - pre_x != 0))
-	{
-		glVertex2d(source.x - size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))), source.y - size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))));
-		glVertex2d(source.x + size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))), source.y + size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))));
-	}
-	else if (target.y - pre_y == 0)
+
+	if (target.y - pre_y == 0)
 	{
 		glVertex2d(source.x - size / 2, source.y);
 		glVertex2d(source.x + size / 2, source.y);
@@ -103,6 +99,16 @@ void LinesBrush::DirectionBrush(const Point source, const Point target)
 	{
 		glVertex2d(source.x, source.y - size / 2);
 		glVertex2d(source.x, source.y + size / 2);
+	}
+	else if ((target.y - pre_y) / (target.x - pre_x) < 0)
+	{
+		glVertex2d(source.x + size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) , source.y - size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) );
+		glVertex2d(source.x - size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) , source.y + size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) );
+	}
+	else if ((target.y - pre_y) / (target.x - pre_x) > 0)
+	{
+		glVertex2d(source.x - size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) , source.y - size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) );
+		glVertex2d(source.x + size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) , source.y + size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) );
 	}
 
 pre_x = target.x;

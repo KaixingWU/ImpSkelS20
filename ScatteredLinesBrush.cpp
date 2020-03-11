@@ -123,20 +123,26 @@ void ScatteredLinesBrush::DirectionBrush(const Point source, const Point target)
 
 		int a = -0.5 * size + (int)(frand() * size);
 
-		if ((target.y - pre_y != 0) && (target.x - pre_x != 0))
-		{
-			glVertex2d(source.x - size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))) - 0.5 * size + (int)(frand() * size) + a, source.y - size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))) + a);
-			glVertex2d(source.x + size / 2 * (cos(atan(abs((target.x - pre_x) / (target.y - pre_y))))) - 0.5 * size + (int)(frand() * size) + a, source.y + size / 2 * (sin(atan(abs((target.x - pre_x) / (target.y - pre_y))))) + a);
-		}
-		else if (target.y - pre_y == 0)
+		
+		if (target.y - pre_y == 0)
 		{
 			glVertex2d(source.x - size / 2 + a, source.y + a);
 			glVertex2d(source.x + size / 2 + a, source.y + a);
 		}
-		else if (target.x - pre_x == 0)
+		if (target.x - pre_x == 0)
 		{
 			glVertex2d(source.x + a, source.y - size / 2 + a);
 			glVertex2d(source.x + a, source.y + size / 2 + a);
+		}
+		else if ((target.y - pre_y) / (target.x - pre_x) < 0)
+		{
+			glVertex2d(source.x + size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a, source.y - size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
+			glVertex2d(source.x - size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a, source.y + size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
+		}
+		else if((target.y - pre_y) / (target.x - pre_x) > 0)
+		{
+			glVertex2d(source.x - size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) - a, source.y - size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
+			glVertex2d(source.x + size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) - a, source.y + size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
 		}
 
 		pre_x = target.x;
