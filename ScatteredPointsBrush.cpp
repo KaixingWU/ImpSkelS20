@@ -10,7 +10,7 @@ ScatteredPointsBrush::ScatteredPointsBrush(ImpressionistDoc* pDoc, char* name) :
 {
 }
 
-void ScatteredPointsBrush::BrushBegin(const Point source, const Point target)
+void ScatteredPointsBrush::BrushBegin(const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
@@ -19,14 +19,14 @@ void ScatteredPointsBrush::BrushBegin(const Point source, const Point target)
 
 	glPointSize(1.0);
 	
-	BrushMove(source, target);
+	BrushMove(source, target,DirectionType);
 }
 
-void ScatteredPointsBrush::BrushMove(const Point source, const Point target)
+void ScatteredPointsBrush::BrushMove(const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
-
+	Blend();
 	if (pDoc == NULL) {
 		printf("PointBrush::BrushMove  document is NULL\n");
 		return;

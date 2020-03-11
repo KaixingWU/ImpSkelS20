@@ -28,7 +28,7 @@ public:
 	int     clearCanvas();                  // called by the UI to clear the drawing canvas
 	int		getBrushType();
 	void	setBrushType(int type);			// called by the UI to set the brushType
-	//void	setDirectionType(int type);		// called by the UI to set the directionType
+	void	setDirectionType(int type);		// called by the UI to set the directionType
 	int		getSize();						// get the UI size
 	void	setLineAngle(int angle);
 	int		getLineWidth();					// get the UI line width
@@ -37,6 +37,7 @@ public:
 	double  getColorR();					// get the UI ColorR
 	double  getColorG();					// get the UI ColorG
 	double  getColorB();					// get the UI ColorB
+	int		getDirectionType();				// get the 
 
 	//right click
 	void	rightStart(Point target);
@@ -59,10 +60,10 @@ public:
 
 	// Dimensions of original window.
 	int				m_nWidth,
-		m_nHeight;
+					m_nHeight;
 	// Dimensions of the paint window.
 	int				m_nPaintWidth,
-		m_nPaintHeight;
+					m_nPaintHeight;
 	// Bitmaps for original image and painting.
 	unsigned char* m_ucBitmap;
 	unsigned char* m_ucPainting;

@@ -97,61 +97,65 @@ void PaintView::draw()
 
 	}
 
-	if ( m_pDoc->m_ucPainting && isAnEvent) 
+	if (m_pDoc->m_ucPainting && isAnEvent)
 	{
 
 		// Clear it after processing.
-		isAnEvent	= 0;	
+		isAnEvent = 0;
 
-		Point source( coord.x + m_nStartCol, m_nEndRow - coord.y );
-		Point target( coord.x, m_nWindowHeight - coord.y );
-		
+		Point source(coord.x + m_nStartCol, m_nEndRow - coord.y);
+		Point target(coord.x, m_nWindowHeight - coord.y);
+
 		// This is the event handler
-		switch (eventToDo) 
-		{
-		case LEFT_MOUSE_DOWN:
-			m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
-			break;
-		case LEFT_MOUSE_DRAG:
-			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
-			break;
-		case LEFT_MOUSE_UP:
-			m_pDoc->m_pCurrentBrush->BrushEnd( source, target );
+	
+			switch (eventToDo)
+			{
 
-			SaveCurrentContent();
-			RestoreContent();
-			break;
-		case RIGHT_MOUSE_DOWN:
-			
-			m_pDoc->rightStart(target);
+			case LEFT_MOUSE_DOWN:
+				m_pDoc->m_pCurrentBrush->BrushBegin(source, target, m_pDoc->m_pDirectionType);
+				break;
+			case LEFT_MOUSE_DRAG:
+				m_pDoc->m_pCurrentBrush->BrushMove(source, target, m_pDoc->m_pDirectionType);
+				break;
+			case LEFT_MOUSE_UP:
+				m_pDoc->m_pCurrentBrush->BrushEnd(source, target);
 
-			break;
-		case RIGHT_MOUSE_DRAG:
-			RestoreContent();
-			m_pDoc->rightEnd(target);
-			glLineWidth(1);
-			glBegin(GL_LINES);
-			glColor3f(255,0 , 0);
-			glVertex2d(m_pDoc->rightStartPoint.x, m_pDoc->rightStartPoint.y);
-			glVertex2d(m_pDoc->rightEndPoint.x, m_pDoc->rightEndPoint.y);
-			glEnd();
+				SaveCurrentContent();
+				RestoreContent();
+				break;
+			case RIGHT_MOUSE_DOWN:
 
-			break;
-		case RIGHT_MOUSE_UP:
-			
-			m_pDoc->rightEnd(target);
-			if (m_pDoc->getBrushType() == 1 || m_pDoc->getBrushType() == 4) {
-				m_pDoc->setLineAngle(m_pDoc->computeLineAngle());
-				m_pDoc->setSize(m_pDoc->computeLineSize());
+				m_pDoc->rightStart(target);
+
+				break;
+			case RIGHT_MOUSE_DRAG:
+				RestoreContent();
+				m_pDoc->rightEnd(target);
+				glLineWidth(1);
+				glBegin(GL_LINES);
+				glColor3f(255, 0, 0);
+				glVertex2d(m_pDoc->rightStartPoint.x, m_pDoc->rightStartPoint.y);
+				glVertex2d(m_pDoc->rightEndPoint.x, m_pDoc->rightEndPoint.y);
+				glEnd();
+
+				break;
+			case RIGHT_MOUSE_UP:
+
+				m_pDoc->rightEnd(target);
+				if (m_pDoc->getBrushType() == 1 || m_pDoc->getBrushType() == 4) {
+					m_pDoc->setLineAngle(m_pDoc->computeLineAngle());
+					m_pDoc->setSize(m_pDoc->computeLineSize());
+				}
+				RestoreContent();
+				break;
+
+			default:
+				printf("Unknown event!!\n");
+				break;
 			}
-			RestoreContent();
-			break;
-
-		default:
-			printf("Unknown event!!\n");		
-			break;
 		}
-	}
+	
+	
 
 	glFlush();
 

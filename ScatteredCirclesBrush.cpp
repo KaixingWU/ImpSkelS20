@@ -12,7 +12,7 @@ ScatteredCirclesBrush::ScatteredCirclesBrush(ImpressionistDoc* pDoc, char* name)
 }
 
 
-void ScatteredCirclesBrush::BrushBegin(const Point source, const Point target)
+void ScatteredCirclesBrush::BrushBegin(const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
@@ -24,10 +24,10 @@ void ScatteredCirclesBrush::BrushBegin(const Point source, const Point target)
 	//glPointSize((float)size);
 
 
-	BrushMove(source, target);
+	BrushMove(source, target, DirectionType);
 }
 
-void ScatteredCirclesBrush::BrushMove(const Point source, const Point target)
+void ScatteredCirclesBrush::BrushMove(const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;

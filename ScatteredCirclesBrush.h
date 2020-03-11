@@ -10,8 +10,8 @@ class ScatteredCirclesBrush : public ImpBrush
 public:
 	ScatteredCirclesBrush(ImpressionistDoc* pDoc = NULL, char* name = NULL);
 
-	void BrushBegin(const Point source, const Point target);
-	void BrushMove(const Point source, const Point target);
+	void BrushBegin(const Point source, const Point target, int DirectionType);
+	void BrushMove(const Point source, const Point target, int DirectionType);
 	void BrushEnd(const Point source, const Point target);
 	char* BrushName(void);
 	void DrawScatteredCircle(const Point source, const Point target);

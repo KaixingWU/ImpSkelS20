@@ -16,7 +16,7 @@ PointBrush::PointBrush( ImpressionistDoc* pDoc, char* name ) :
 {
 }
 
-void PointBrush::BrushBegin( const Point source, const Point target )
+void PointBrush::BrushBegin( const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg=pDoc->m_pUI;
@@ -27,10 +27,10 @@ void PointBrush::BrushBegin( const Point source, const Point target )
 
 	glPointSize( (float)size );
 
-	BrushMove( source, target );
+	BrushMove( source, target, DirectionType);
 }
 
-void PointBrush::BrushMove( const Point source, const Point target )
+void PointBrush::BrushMove( const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg=pDoc->m_pUI;

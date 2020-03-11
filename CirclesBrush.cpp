@@ -11,7 +11,7 @@ CirclesBrush::CirclesBrush(ImpressionistDoc* pDoc, char* name) :
 {
 }
 
-void CirclesBrush::BrushBegin(const Point source, const Point target)
+void CirclesBrush::BrushBegin(const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
@@ -19,10 +19,10 @@ void CirclesBrush::BrushBegin(const Point source, const Point target)
 	int size = pDoc->getSize();
 
 
-	BrushMove(source, target);
+	BrushMove(source, target, DirectionType);
 }
 
-void CirclesBrush::BrushMove(const Point source, const Point target)
+void CirclesBrush::BrushMove(const Point source, const Point target, int DirectionType)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;

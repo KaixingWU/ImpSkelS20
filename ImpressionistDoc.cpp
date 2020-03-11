@@ -49,6 +49,7 @@ ImpressionistDoc::ImpressionistDoc()
 
 	// make one of the brushes current
 	m_pCurrentBrush = ImpBrush::c_pBrushes[0];
+	m_pDirectionType = 1;
 
 }
 
@@ -78,10 +79,10 @@ void ImpressionistDoc::setBrushType(int type)
 	m_nBrushType = type;
 	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
 }
-/*
+
 void ImpressionistDoc::setDirectionType(int type)
 {
-	if (type < 3 ) {
+	if (type == 2 ) {
 		setBrushType(1);//lines
 	}
 	else {
@@ -89,7 +90,7 @@ void ImpressionistDoc::setDirectionType(int type)
 	}
 
 }
-*/
+
 
 int ImpressionistDoc::getBrushType() {
 	return m_nBrushType;
@@ -133,6 +134,11 @@ double ImpressionistDoc::getColorG()
 double ImpressionistDoc::getColorB()
 {
 	return m_pUI->getColorB();
+}
+
+int ImpressionistDoc::getDirectionType()
+{
+	return m_pDirectionType;
 }
 
 void	ImpressionistDoc::setSize(int size) {
