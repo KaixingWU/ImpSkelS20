@@ -49,6 +49,7 @@ public:
 
 	void	setSize(int size);				// set the UI size
 	char* getImageName();					// get the current image name
+	void	setPicIntensity();
 
 
 // Attributes
@@ -67,6 +68,9 @@ public:
 	// Bitmaps for original image and painting.
 	unsigned char* m_ucBitmap;
 	unsigned char* m_ucPainting;
+	int Gaussian_filter[3][3];
+	double** pic_intensity;//calculate picture intensity
+
 
 
 	// The current active brush.

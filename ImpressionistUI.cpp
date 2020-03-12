@@ -208,6 +208,7 @@ void ImpressionistUI::cb_brushes(Fl_Menu_* o, void* v)
 	whoami(o)->m_brushDialog->show();
 }
 
+
 //------------------------------------------------------------
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas menu item is chosen
@@ -226,7 +227,7 @@ void ImpressionistUI::cb_clear_canvas(Fl_Menu_* o, void* v)
 //
 void ImpressionistUI::cb_colors(Fl_Menu_* o, void* v)
 {
-
+	whoami(o)->m_colorDialog->show();
 }
 
 //choose artist styles freely
@@ -586,6 +587,8 @@ ImpressionistUI::ImpressionistUI() {
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
+
+	
 	// Add a brush type choice to the dialog
 	m_BrushTypeChoice = new Fl_Choice(50, 10, 150, 25, "&Brush");
 	m_BrushTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
@@ -722,5 +725,14 @@ ImpressionistUI::ImpressionistUI() {
 
 
     m_brushDialog->end();	
+
+
+	// Color dialog definition
+	m_colorDialog = new Fl_Window(300, 300, "Color Selector");
+	m_colorChooser = new Fl_Color_Chooser(50, 20, 200, 200, "&Color Blending");
+	m_colorChooser->user_data((void*)(this));
+	m_colorChooser->rgb(m_nColorR, m_nColorG, m_nColorB);
+	m_colorChooser->callback(cb_color_chooser);
+	m_colorDialog->end();
 
 }

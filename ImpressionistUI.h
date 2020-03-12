@@ -15,6 +15,8 @@
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Light_Button.H>
+#include <FL/Fl_Color_Chooser.H>
+
 
 #include "Impressionist.h"
 #include "OriginalView.h"
@@ -37,6 +39,9 @@ public:
 	Fl_Window* m_brushDialog;
 	Fl_Choice* m_BrushTypeChoice;
 	Fl_Choice* m_StrokeDirectionTypeChoice;
+
+	Fl_Window* m_colorDialog;
+	Fl_Color_Chooser* m_colorChooser;
 
 	Fl_Slider* m_BrushSizeSlider;
 	Fl_Slider* m_BrushLineWidthSlider;
@@ -125,6 +130,7 @@ private:
 	static void cb_lineAngleSlides(Fl_Widget* o, void* v);
 	static void cb_alphaSlides(Fl_Widget* o, void* v);
 	static void cb_color_chooser(Fl_Widget* o, void* v);
+
 	
 };
 

@@ -32,6 +32,8 @@ ImpressionistDoc::ImpressionistDoc()
 	m_ucBitmap = NULL;
 	m_ucPainting = NULL;
 
+	pic_intensity = NULL;
+
 
 	// create one instance of each brush
 	ImpBrush::c_nBrushCount = NUM_BRUSH_TYPE;
@@ -47,10 +49,27 @@ ImpressionistDoc::ImpressionistDoc()
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_LINES] = new ScatteredLinesBrush(this, "Scattered Lines");
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_CIRCLES] = new ScatteredCirclesBrush(this, "Scattered Circles");
 
+	//filter
+	/*Gaussian_filter[0][0] = 1;
+	Gaussian_filter[0][1] = 2;
+	Gaussian_filter[0][2] = 1;
+	Gaussian_filter[1][0] = 2;
+	Gaussian_filter[1][1] = 4;
+	Gaussian_filter[1][2] = 2;
+	Gaussian_filter[2][0] = 1;
+	Gaussian_filter[2][1] = 2;
+	Gaussian_filter[2][2] = 1;*/
+
+
+	
+
+
 	// make one of the brushes current
 	m_pCurrentBrush = ImpBrush::c_pBrushes[0];
 	m_pDirectionType = 0;
-
+	/*m_pUI->m_StrokeDirectionTypeChoice->deactivate();
+	m_pUI->m_BrushLineWidthSlider->deactivate();
+	m_pUI->m_BrushLineAngleSlider->deactivate();*/
 }
 
 
@@ -78,6 +97,18 @@ void ImpressionistDoc::setBrushType(int type)
 {
 	m_nBrushType = type;
 	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+		if (type != BRUSH_LINES && type != BRUSH_SCATTERED_LINES) {
+			m_pUI->m_StrokeDirectionTypeChoice->deactivate();
+			m_pUI->m_BrushLineWidthSlider->deactivate();
+			m_pUI->m_BrushLineAngleSlider->deactivate();
+		}
+		else {
+			m_pUI->m_StrokeDirectionTypeChoice->activate();
+			m_pUI->m_BrushLineWidthSlider->activate();
+			m_pUI->m_BrushLineAngleSlider->activate();
+		}
+		
 }
 
 void ImpressionistDoc::setDirectionType(int type)
@@ -147,6 +178,16 @@ void	ImpressionistDoc::setSize(int size) {
 }
 void	ImpressionistDoc::setLineAngle(int angle) {
 	m_pUI->setLineAngle(angle);
+}
+
+void	ImpressionistDoc::setPicIntensity()
+{
+	pic_intensity = new double* [m_nPaintWidth];
+	for (int i = 0;i < 3;i++)
+	{
+		pic_intensity[i] = new double[m_nPaintHeight];
+	}
+
 }
 
 int ImpressionistDoc::computeLineSize() {

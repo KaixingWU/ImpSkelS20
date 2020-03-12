@@ -117,7 +117,7 @@ void ScatteredLinesBrush::DirectionBrush(const Point source, const Point target)
 	}
 
 	SetColor(source);
-	for (int i = 0; i < rand() % 3 + 3; i++)
+	for (int i = 0; i < rand() % 3 + 5; i++)
 	{
 		//Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
 
