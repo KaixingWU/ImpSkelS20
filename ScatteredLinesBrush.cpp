@@ -40,11 +40,16 @@ void ScatteredLinesBrush::BrushMove(const Point source, const Point target, int 
 
 	int size = pDoc->getSize();
 	int lineAngle = pDoc->getLineAngle();
+
+	int* temp = getGradient(source);
 	//cout <<"out"<< DirectionType << endl;
 	switch (DirectionType)
 	{
 		//cout << DirectionType << endl;
 		case 0:
+			size = pDoc->getSize();
+			lineAngle = pDoc->getLineAngle();
+
 			for (int i = 0; i < rand() % 3 + 2; i++)
 			{
 				Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
@@ -54,6 +59,22 @@ void ScatteredLinesBrush::BrushMove(const Point source, const Point target, int 
 			break;
 		case 1:// brush direction choice
 		{
+			size = pDoc->getSize();
+			int dx = temp[0];
+			int dy = temp[1];
+			lineAngle = atan2(-dy, dx) * 180 / M_PI;
+			if (lineAngle < 0)
+				lineAngle += 360;
+
+			for (int i = 0; i < rand() % 3 + 2; i++)
+			{
+				Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
+				Point b(target.x - 0.5 * size + (int)(frand() * size), target.y - 0.5 * size + (int)(frand() * size));
+				DrawOneLine(a, b);
+			}
+			delete[] temp;
+			return;
+
 		}break;
 		case 2:
 		{
@@ -61,6 +82,8 @@ void ScatteredLinesBrush::BrushMove(const Point source, const Point target, int 
 		}break;
 
 	}
+
+	delete[] temp;
 }
 
 void ScatteredLinesBrush::DrawOneLine(const Point source, const Point target)
@@ -80,7 +103,6 @@ void ScatteredLinesBrush::DrawOneLine(const Point source, const Point target)
 
 	glBegin(GL_LINES);
 	SetColor(source);
-
 	
 	glVertex2d(source.x - size / 2 * cos(lineAngle * M_PI / 180), source.y - size / 2 * sin(lineAngle * M_PI / 180));
 	glVertex2d(target.x + size / 2 * cos(lineAngle * M_PI / 180), target.y + size / 2 * sin(lineAngle * M_PI / 180));
