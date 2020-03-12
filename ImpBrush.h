@@ -61,8 +61,8 @@ protected:
 
 public:
 	// The implementation of your brush should realize these virtual functions
-	virtual void BrushBegin( const Point source, const Point target , int DirectionType) = 0;
-	virtual void BrushMove( const Point source, const Point target , int DirectionType) = 0;
+	virtual void BrushBegin( const Point source, const Point target , int DirectionType =-1) = 0;
+	virtual void BrushMove( const Point source, const Point target , int DirectionType =-1) = 0;
 	virtual void BrushEnd( const Point source, const Point target ) = 0;
 
 	// according to the source image and the position, determine the draw color
@@ -79,6 +79,7 @@ public:
 	
 	static int			c_nBrushCount;	// How many brushes we have,
 	static ImpBrush**	c_pBrushes;		// and what they are.
+	int* getGradient(const Point source);
 
 private:
 	ImpressionistDoc*	m_pDoc;

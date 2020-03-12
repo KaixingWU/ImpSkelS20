@@ -34,6 +34,68 @@ void LinesBrush::BrushMove(const Point source, const Point target, int Direction
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
 	Blend();
+
+	if (pDoc == NULL) {
+		printf("LineBrush::BrushMove  document is NULL\n");
+		return;
+	}
+
+	int size;
+	int lineAngle;
+	int* temp = getGradient(source);
+
+
+	/*
+	if (DirectionType == 0 || DirectionType == 1 || pDoc->m_pDirectionType == 0 || pDoc->m_pDirectionType == 1) {
+		switch (pDoc->m_pDirectionType) {
+		case 0://right mouse
+			size = pDoc->getSize();
+			lineAngle = pDoc->getLineAngle();
+			break;
+		case 1://gradient
+			size = pDoc->getSize();
+			int dx = temp[0];
+			int dy = temp[1];
+			lineAngle = atan2(-dy, dx) * 180 / M_PI;
+			if (lineAngle < 0)
+				lineAngle += 360;
+			break;
+		}
+	}
+	*/
+
+	if (DirectionType == 0 || pDoc->m_pDirectionType == 0) {
+		size = pDoc->getSize();
+		lineAngle = pDoc->getLineAngle();
+		
+		glBegin(GL_LINES);
+		SetColor(source);
+		glVertex2d(source.x - size / 2 * cos(lineAngle * M_PI / 180), source.y - size / 2 * sin(lineAngle * M_PI / 180));
+		glVertex2d(target.x + size / 2 * cos(lineAngle * M_PI / 180), target.y + size / 2 * sin(lineAngle * M_PI / 180));
+
+		glEnd();
+		delete[] temp;
+		return;
+	}
+
+	if (DirectionType == 1 || pDoc->m_pDirectionType == 1) {
+		
+			size = pDoc->getSize();
+			int dx = temp[0];
+			int dy = temp[1];
+			lineAngle = atan2(-dy, dx) * 180 / M_PI;
+			if (lineAngle < 0)
+				lineAngle += 360;
+			
+			glBegin(GL_LINES);
+			SetColor(source);
+			glVertex2d(source.x - size / 2 * cos(lineAngle * M_PI / 180), source.y - size / 2 * sin(lineAngle * M_PI / 180));
+			glVertex2d(target.x + size / 2 * cos(lineAngle * M_PI / 180), target.y + size / 2 * sin(lineAngle * M_PI / 180));
+
+			glEnd();
+			delete[] temp;
+			return;
+	}
 	
 	if (DirectionType == 2) //brush direction choice
 	{
