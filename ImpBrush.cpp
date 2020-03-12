@@ -74,9 +74,9 @@ void ImpBrush::SetColor(const Point source, double alpha)
 	double chosen_B = pDoc->getColorB();
 
 
-	/*color[0] = (int)(color[0] * chosen_R);
+	color[0] = (int)(color[0] * chosen_R);
 	color[1] = (int)(color[1] * chosen_G);
-	color[2] = (int)(color[2] * chosen_B);*/
+	color[2] = (int)(color[2] * chosen_B);
 
 	color[3] = alpha;
 	//glColor4ubv(color);

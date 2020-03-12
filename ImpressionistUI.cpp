@@ -584,6 +584,12 @@ ImpressionistUI::ImpressionistUI() {
 	m_nLineWidth = 1;
 	m_nLineAngle = 0;
 	m_nAlpha = 255;
+	m_nColorR = 1.00;
+	m_nColorG = 1.00;
+	m_nColorB = 1.00;
+
+
+
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -600,6 +606,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_StrokeDirectionTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
 	m_StrokeDirectionTypeChoice->menu(strokeDirectionTypeMenu);
 	m_StrokeDirectionTypeChoice->callback(cb_StrokeDirectionChoice);
+	m_StrokeDirectionTypeChoice->deactivate();
 
 	//Add Group
 	/*m_SpacingGroup = new Fl_Group(10, 250, 300, 30);
@@ -670,6 +677,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushLineWidthSlider->value(m_nLineWidth);//line width
 	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
 	m_BrushLineWidthSlider->callback(cb_lineWidthSlides);
+	m_BrushLineWidthSlider->deactivate();
 
 	// Add brush line angle slider to the dialog
 	m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
@@ -683,6 +691,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushLineAngleSlider->value(m_nLineAngle);//line angle
 	m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
 	m_BrushLineAngleSlider->callback(cb_lineAngleSlides);
+	m_BrushLineAngleSlider->deactivate();
 
 	// Add brush alpha slider to the dialog
 	m_BrushAlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
@@ -728,8 +737,8 @@ ImpressionistUI::ImpressionistUI() {
 
 
 	// Color dialog definition
-	m_colorDialog = new Fl_Window(300, 300, "Color Selector");
-	m_colorChooser = new Fl_Color_Chooser(50, 20, 200, 200, "&Color Blending");
+	m_colorDialog = new Fl_Window(250, 250, "Color Selector");
+	m_colorChooser = new Fl_Color_Chooser(30, 20, 200, 200, "&Color Blending");
 	m_colorChooser->user_data((void*)(this));
 	m_colorChooser->rgb(m_nColorR, m_nColorG, m_nColorB);
 	m_colorChooser->callback(cb_color_chooser);

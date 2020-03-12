@@ -115,6 +115,7 @@ void ScatteredLinesBrush::BrushEnd(const Point source, const Point target)
 	// do nothing so far
 }
 
+
 void ScatteredLinesBrush::DirectionBrush(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
@@ -139,13 +140,23 @@ void ScatteredLinesBrush::DirectionBrush(const Point source, const Point target)
 	}
 
 	SetColor(source);
-	for (int i = 0; i < rand() % 3 + 5; i++)
+	for (int i = 0; i < rand() % 3 + 25; i++)
 	{
 		//Point a(source.x - 0.5 * size + (int)(frand() * size), source.y - 0.5 * size + (int)(frand() * size));
 
 		int a = -0.5 * size + (int)(frand() * size);
+		double cos_value = cos(atan(abs((target.y - pre_y) / (target.x - pre_x))));
+		double sin_value = sin(atan(abs((target.y - pre_y) / (target.x - pre_x))));
+		double x1 = source.x + size / 2 * cos_value + a;
+		double y1 = source.y - size / 2 * sin_value + a;
+		double x2 = source.x - size / 2 * cos_value + a;
+		double y2 = source.y + size / 2 * sin_value + a;
+		double x3 = source.x - size / 2 * cos_value - a;
+		double y3 = source.y - size / 2 * sin_value + a;
+		double x4 = source.x + size / 2 * cos_value - a;
+		double y4 = source.y + size / 2 * sin_value + a;
 
-		
+
 		if (target.y - pre_y == 0)
 		{
 			glVertex2d(source.x - size / 2 + a, source.y + a);
@@ -158,13 +169,13 @@ void ScatteredLinesBrush::DirectionBrush(const Point source, const Point target)
 		}
 		else if ((target.y - pre_y) / (target.x - pre_x) < 0)
 		{
-			glVertex2d(source.x + size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a, source.y - size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
-			glVertex2d(source.x - size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a, source.y + size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
+			glVertex2d(x1, y1);
+			glVertex2d(x2, y2);
 		}
-		else if((target.y - pre_y) / (target.x - pre_x) > 0)
+		else if ((target.y - pre_y) / (target.x - pre_x) > 0)
 		{
-			glVertex2d(source.x - size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) - a, source.y - size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
-			glVertex2d(source.x + size / 2 * (cos(atan(abs((target.y - pre_y) / (target.x - pre_x))))) - a, source.y + size / 2 * (sin(atan(abs((target.y - pre_y) / (target.x - pre_x))))) + a);
+			glVertex2d(x3, y3);
+			glVertex2d(x4, y4);
 		}
 
 		pre_x = target.x;
