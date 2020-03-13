@@ -28,6 +28,7 @@ public:
 
 	void SaveCurrentContent();
 	void autoDraw();
+	void edgeDraw();
 
 	void RestoreContent();
 

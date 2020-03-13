@@ -18,6 +18,7 @@
 #define RIGHT_MOUSE_DRAG	5
 #define RIGHT_MOUSE_UP		6
 #define AUTO_DRAW			7
+#define EDGE_DRAW			8
 
 
 #ifndef WIN32
@@ -154,6 +155,13 @@ void PaintView::draw()
 				SaveCurrentContent();
 				RestoreContent();
 				break;
+			case EDGE_DRAW:
+				m_pDoc->clearCanvas();
+				m_pDoc->edgeDraw();
+				SaveCurrentContent();
+				RestoreContent();
+
+				break;
 
 			default:
 				printf("Unknown event!!\n");
@@ -274,6 +282,12 @@ void PaintView::RestoreContent()
 
 void PaintView::autoDraw() {
 	eventToDo = 7;
+	isAnEvent = 1;
+	redraw();
+}
+
+void PaintView::edgeDraw() {
+	eventToDo = 8;
 	isAnEvent = 1;
 	redraw();
 }

@@ -89,6 +89,7 @@ public:
 	double				getAlpha();
 	void				setAlpha(double alpha);
 	int					getAutoSpace();
+	int					getEdgeThreshold();
 
 	double				getColorR();
 	double				getColorG();
@@ -96,6 +97,8 @@ public:
 	void				setColorR(double R);
 	void				setColorG(double G);
 	void				setColorB(double B);
+
+	void				clearCanvas();
 
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document

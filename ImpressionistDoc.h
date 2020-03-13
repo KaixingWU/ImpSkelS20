@@ -40,6 +40,7 @@ public:
 	double  getColorB();					// get the UI ColorB
 	int		getDirectionType();				// get the 
 	void	autoPaint();
+	void	edgeDraw();
 
 	//right click
 	void	rightStart(Point target);

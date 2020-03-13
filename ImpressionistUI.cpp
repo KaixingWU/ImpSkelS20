@@ -348,9 +348,13 @@ void	ImpressionistUI::cb_autoSpaceRand(Fl_Widget* o, void* v) {
 
 void	ImpressionistUI::cb_Do_it_button(Fl_Widget* o, void* v)
 {
+	cb_clear_canvas_button(o, v);
 	ImpressionistDoc* pDoc = ((ImpressionistUI*)(o->user_data()))->getDocument();
+	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
+	//cb_clear_canvas_button(o, v);
 
-	pDoc->clearCanvas();
+	pUI->m_paintView->edgeDraw();
+	pDoc->edgeDraw();
 }
 
 
@@ -392,6 +396,7 @@ void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
 
 void ImpressionistUI::cb_thresholdSlides(Fl_Widget* o, void* v) {
 	((ImpressionistUI*)(o->user_data()))->m_nEdgeThreshold = int(((Fl_Slider*)o)->value());
+	((ImpressionistUI*)(o->user_data()))->clearCanvas();
 }
 
 //Color choice
@@ -553,6 +558,10 @@ int ImpressionistUI::getAutoSpace() {
 	return m_nAutoSpace;
 }
 
+int ImpressionistUI::getEdgeThreshold() {
+	return m_nEdgeThreshold;
+}
+
 //-------------------------------------------------
 // Set the brush size
 //-------------------------------------------------
@@ -591,6 +600,11 @@ void ImpressionistUI::setAlpha(double alpha)
 {
 	m_nAlpha = alpha;
 }
+
+void ImpressionistUI::clearCanvas() {
+	m_pDoc->clearCanvas();
+}
+
 
 // Main menu definition
 Fl_Menu_Item ImpressionistUI::menuitems[] = {
@@ -677,7 +691,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nColorG = 1.00;
 	m_nColorB = 1.00;
 	m_nAutoSpace = 1;
-
+	m_nEdgeThreshold = 400;
 
 
 	// brush dialog definition
@@ -739,7 +753,7 @@ ImpressionistUI::ImpressionistUI() {
 	//Add a Do it Button to the dialog
 	m_DoitButton = new Fl_Button(340, 290, 50, 21, "&Do it");
 	m_DoitButton->user_data((void*)(this));
-	m_DoitButton->callback(cb_clear_canvas_button);
+	m_DoitButton->callback(cb_Do_it_button);
 
 	// Add brush size slider to the dialog 
 	m_BrushSizeSlider = new Fl_Value_Slider(10, 80, 300, 20, "Size");

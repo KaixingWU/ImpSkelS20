@@ -449,3 +449,31 @@ void	ImpressionistDoc::autoPaint() {
 	}
 	m_pUI->setSize(size);
 }
+
+void ImpressionistDoc::edgeDraw() {
+	int width = m_nWidth;
+	int height = m_nHeight;
+
+	for (int i = 0; i < width + 1; i++) {
+		for (int j = 0; j < height + 1; j++) {
+			Point a(i,j);
+			int* temp = m_pCurrentBrush->getGradient(a);
+			int square = temp[0] * temp[0] + temp[1] * temp[1];
+			double magnitude = sqrt(square);
+
+			if (magnitude > m_pUI->getEdgeThreshold()) {
+				GLubyte color[3];
+				color[0] = 255;
+				color[1] = 255;
+				color[2] = 255;
+
+				glPointSize(1);
+				glBegin(GL_POINTS);
+				glColor3ubv(color);
+				glVertex2d(a.x, a.y);
+				glEnd();
+			}
+
+		}
+	}
+}
