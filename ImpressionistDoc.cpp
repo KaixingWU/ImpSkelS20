@@ -233,7 +233,7 @@ void	ImpressionistDoc::rightEnd(Point target) {
 
 void ImpressionistDoc::applyCustomFilter(double* kernel, int w, int h)
 {
-	/*m_pUI->m_paintView->refresh();
+	m_pUI->m_paintView->refresh();
 	FilterCustomize customizedFilter(kernel, w, h);
 	GLubyte* target = new GLubyte[m_nWidth * m_nHeight * 3];
 	memset(target, 0, sizeof(target));
@@ -247,22 +247,8 @@ void ImpressionistDoc::applyCustomFilter(double* kernel, int w, int h)
 			target[pixelPos + 2] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 2);
 		}
 	}
-	m_ucPainting = target;*/
-	m_pUI->m_paintView->refresh();
-	FilterCustomize customizedFilter(kernel, w, h);
-	GLubyte* tar = new GLubyte[m_nWidth * m_nHeight * 3];
-	memset(tar, 0, sizeof(tar));
-	for (int i = 0; i < m_nHeight; ++i)
-	{
-		for (int j = 0; j < m_nWidth; ++j)
-		{
-			int pixelPos = (i * m_nWidth + j) * 3;
-			tar[pixelPos] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 0);
-			tar[pixelPos + 1] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 1);
-			tar[pixelPos + 2] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 2);
-		}
-	}
-	m_ucPainting = tar;
+	m_ucPainting = target;
+	
 }
 
 //---------------------------------------------------------
