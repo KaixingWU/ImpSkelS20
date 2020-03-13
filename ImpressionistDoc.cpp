@@ -7,6 +7,7 @@
 
 #include <FL/fl_ask.H>
 #include <cmath>
+#include <ctime>
 
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
@@ -407,7 +408,7 @@ GLubyte* ImpressionistDoc::GetOriginalPixel(const Point p)
 }
 
 void	ImpressionistDoc::autoPaint() {
-
+	srand(time(NULL));
 	int size = m_pUI->getSize();
 	int space = m_pUI->getAutoSpace();
 	int width = m_nWidth;
@@ -440,18 +441,24 @@ void	ImpressionistDoc::autoPaint() {
 				int x = 1 + i * space;
 				int y = 1 + j * space;
 				Point a(x, y);
-				double temp = frand() + 1;
-				m_pUI->setSize(temp * size);
-				if (x == 1 && y == 1)
-					brush->BrushBegin(a, a, 0);
-				else
-					brush->BrushMove(a, a, 0);
+				//cout << "random" << endl;
+				double random = rand() / ((double)RAND_MAX);
+				double temp = 2 * random + 1.0;
+				double range = temp * size;
+
+				m_pUI->setSize(range);
+				setSize(range);
+
+				//if (x == 1 && y == 1)
+				brush->BrushBegin(a, a, 0);
+
 				brush->BrushEnd(a, a);
 			}
 		}
 
 	}
 	m_pUI->setSize(size);
+	setSize(size);
 }
 
 void ImpressionistDoc::edgeDraw() {

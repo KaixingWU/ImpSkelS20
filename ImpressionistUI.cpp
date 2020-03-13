@@ -700,7 +700,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nColorR = 1.00;
 	m_nColorG = 1.00;
 	m_nColorB = 1.00;
-	m_nAutoSpace = 1;
+	m_nAutoSpace = 12;
 	m_nEdgeThreshold = 400;
 
 
@@ -756,7 +756,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_SizeRandButton->callback(cb_autoSpaceRand);
 
 	//Add a Paint Button to the dialog
-	m_PaintButton = new Fl_Button(340, 250, 50, 21, "&Paint");
+	m_PaintButton = new Fl_Button(320, 250, 70, 21, "&Paint(60s)");
 	m_PaintButton->user_data((void*)(this));
 	m_PaintButton->callback(cb_Paint_button);
 

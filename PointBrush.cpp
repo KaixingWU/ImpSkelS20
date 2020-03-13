@@ -28,7 +28,7 @@ void PointBrush::BrushBegin( const Point source, const Point target, int Directi
 
 
 	glPointSize( (float)size );
-	cout << size << ' ' << source.x << ' ' << source.y << endl;
+	//cout << size << ' ' << source.x << ' ' << source.y << endl;
 	BrushMove( source, target, DirectionType);
 }
 
