@@ -88,6 +88,7 @@ public:
 	void				setLineAngle(int angle);
 	double				getAlpha();
 	void				setAlpha(double alpha);
+	int					getAutoSpace();
 
 	double				getColorR();
 	double				getColorG();
@@ -147,6 +148,10 @@ private:
 	static void cb_filter_check_size(Fl_Widget* o, void* v);
 	static void cb_applyFilter(Fl_Widget* o, void* v);
 	static void cb_filter_size(Fl_Menu_* o, void* v);
+
+	static void cb_autoSpaceSlides(Fl_Widget* o, void* v);
+	static void	cb_autoSpaceRand(Fl_Widget* o, void* v);
+	static void cb_thresholdSlides(Fl_Widget* o, void* v);
 
 	void ShowFilterEntryValue(int width, int height);
 

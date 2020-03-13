@@ -39,6 +39,7 @@ public:
 	double  getColorG();					// get the UI ColorG
 	double  getColorB();					// get the UI ColorB
 	int		getDirectionType();				// get the 
+	void	autoPaint();
 
 	//right click
 	void	rightStart(Point target);
@@ -82,6 +83,7 @@ public:
 	// Size of the brush.
 	int m_nSize;
 	int m_pDirectionType;
+	int m_nRandSpaceOnOff;
 
 	ImpressionistUI* m_pUI;
 

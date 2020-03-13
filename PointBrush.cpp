@@ -8,6 +8,8 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "pointbrush.h"
+#include <iostream>
+using namespace std;
 
 extern float frand();
 
@@ -26,7 +28,7 @@ void PointBrush::BrushBegin( const Point source, const Point target, int Directi
 
 
 	glPointSize( (float)size );
-
+	cout << size << ' ' << source.x << ' ' << source.y << endl;
 	BrushMove( source, target, DirectionType);
 }
 

@@ -27,6 +27,7 @@ public:
 	void resizeWindow(int width, int height);
 
 	void SaveCurrentContent();
+	void autoDraw();
 
 	void RestoreContent();
 

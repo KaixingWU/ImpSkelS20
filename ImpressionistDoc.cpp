@@ -10,6 +10,8 @@
 
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
+#include <iostream>
+using namespace std;
 
 #include "ImpBrush.h"
 
@@ -24,6 +26,7 @@
 #include "BlurFilterBrush.h"
 
 #define DESTROY(p)	{  if ((p)!=NULL) {delete [] p; p=NULL; } }
+extern float frand();
 
 ImpressionistDoc::ImpressionistDoc()
 {
@@ -71,6 +74,7 @@ ImpressionistDoc::ImpressionistDoc()
 	// make one of the brushes current
 	m_pCurrentBrush = ImpBrush::c_pBrushes[0];
 	m_pDirectionType = 0;
+	m_nRandSpaceOnOff = 0;
 }
 
 
@@ -398,3 +402,50 @@ GLubyte* ImpressionistDoc::GetOriginalPixel(const Point p)
 	return GetOriginalPixel(p.x, p.y);
 }
 
+void	ImpressionistDoc::autoPaint() {
+
+	int size = m_pUI->getSize();
+	int space = m_pUI->getAutoSpace();
+	int width = m_nWidth;
+	int height = m_nHeight;
+	cout << size << ' ' << space << ' ' << width << ' ' << height << endl;
+	ImpBrush* brush = m_pCurrentBrush;
+	int rowNum = width / space;
+	int colNum = height / space;
+	int randOnOff = m_nRandSpaceOnOff;
+
+	if (randOnOff % 2 == 0) {
+		for (int i = 0; i < rowNum + 1; i++) {
+			for (int j = 0; j < colNum + 1; j++) {
+				int x = 1 + i * space;
+				int y = 1 + j * space;
+				Point a(x, y);
+				//Point b(x,y);
+				cout << x << ' ' << y << endl;
+				if (x == 1 && y == 1)
+					brush->BrushBegin(a, a, 0);
+				else
+					brush->BrushMove(a, a, 0);
+				brush->BrushEnd(a, a);
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < rowNum + 1; i++) {
+			for (int j = 0; j < colNum + 1; j++) {
+				int x = 1 + i * space;
+				int y = 1 + j * space;
+				Point a(x, y);
+				double temp = frand() + 1;
+				m_pUI->setSize(temp * size);
+				if (x == 1 && y == 1)
+					brush->BrushBegin(a, a, 0);
+				else
+					brush->BrushMove(a, a, 0);
+				brush->BrushEnd(a, a);
+			}
+		}
+
+	}
+	m_pUI->setSize(size);
+}

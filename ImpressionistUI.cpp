@@ -335,8 +335,15 @@ void	ImpressionistUI::cb_Size_Rand_button(Fl_Widget* o, void* v)
 void	ImpressionistUI::cb_Paint_button(Fl_Widget* o, void* v)
 {
 	ImpressionistDoc* pDoc = ((ImpressionistUI*)(o->user_data()))->getDocument();
+	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
+	pUI->m_paintView->autoDraw();
+	pDoc->autoPaint();
+}
 
-	pDoc->clearCanvas();
+void	ImpressionistUI::cb_autoSpaceRand(Fl_Widget* o, void* v) {
+	ImpressionistDoc* pDoc = ((ImpressionistUI*)(o->user_data()))->getDocument();
+
+	pDoc->m_nRandSpaceOnOff += 1;
 }
 
 void	ImpressionistUI::cb_Do_it_button(Fl_Widget* o, void* v)
@@ -371,11 +378,20 @@ void ImpressionistUI::cb_lineAngleSlides(Fl_Widget* o, void* v)
 	((ImpressionistUI*)(o->user_data()))->m_nLineAngle = int(((Fl_Slider*)o)->value());
 }
 
+void ImpressionistUI::cb_autoSpaceSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nAutoSpace = int(((Fl_Slider*)o)->value());
+}
+
 void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
 {
 	double value = ((Fl_Slider*)o)->value();
 	int res1 = (int)(value * 255);
 	((ImpressionistUI*)(o->user_data()))->m_nAlpha = res1;
+}
+
+void ImpressionistUI::cb_thresholdSlides(Fl_Widget* o, void* v) {
+	((ImpressionistUI*)(o->user_data()))->m_nEdgeThreshold = int(((Fl_Slider*)o)->value());
 }
 
 //Color choice
@@ -533,7 +549,9 @@ double ImpressionistUI::getColorB()
 	return m_nColorB;
 }
 
-
+int ImpressionistUI::getAutoSpace() {
+	return m_nAutoSpace;
+}
 
 //-------------------------------------------------
 // Set the brush size
@@ -658,7 +676,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_nColorR = 1.00;
 	m_nColorG = 1.00;
 	m_nColorB = 1.00;
-
+	m_nAutoSpace = 1;
 
 
 
@@ -711,12 +729,12 @@ ImpressionistUI::ImpressionistUI() {
 	//Add a Size Rand Button to the dialog
 	m_SizeRandButton = new Fl_Light_Button(230, 250, 85, 21, "&Size Rand");
 	m_SizeRandButton->user_data((void*)(this));
-	m_SizeRandButton->callback(cb_clear_canvas_button);
+	m_SizeRandButton->callback(cb_autoSpaceRand);
 
 	//Add a Paint Button to the dialog
 	m_PaintButton = new Fl_Button(340, 250, 50, 21, "&Paint");
 	m_PaintButton->user_data((void*)(this));
-	m_PaintButton->callback(cb_clear_canvas_button);
+	m_PaintButton->callback(cb_Paint_button);
 
 	//Add a Do it Button to the dialog
 	m_DoitButton = new Fl_Button(340, 290, 50, 21, "&Do it");
@@ -786,9 +804,9 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushSpacingSlider->minimum(1);
 	m_BrushSpacingSlider->maximum(16);
 	m_BrushSpacingSlider->step(1);
-	m_BrushSpacingSlider->value(m_nSize);
+	m_BrushSpacingSlider->value(m_nAutoSpace);
 	m_BrushSpacingSlider->align(FL_ALIGN_RIGHT);
-	m_BrushSpacingSlider->callback(cb_sizeSlides);
+	m_BrushSpacingSlider->callback(cb_autoSpaceSlides);
 
 	// Add brush edge slider to the dialog
 	m_BrushEdgeSlider = new Fl_Value_Slider(10, 290, 200, 20, "Edge Threshold");
@@ -799,9 +817,9 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushEdgeSlider->minimum(0);
 	m_BrushEdgeSlider->maximum(500);
 	m_BrushEdgeSlider->step(1);
-	m_BrushEdgeSlider->value(m_nSize);
+	m_BrushEdgeSlider->value(m_nEdgeThreshold);
 	m_BrushEdgeSlider->align(FL_ALIGN_RIGHT);
-	m_BrushEdgeSlider->callback(cb_sizeSlides);
+	m_BrushEdgeSlider->callback(cb_thresholdSlides);
 
 
     m_brushDialog->end();	
