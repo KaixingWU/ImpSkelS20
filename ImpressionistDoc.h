@@ -54,7 +54,7 @@ public:
 	char* getImageName();					// get the current image name
 	void	setPicIntensity();
 
-	void applyCustomFilter(double* kernel, int w, int h);
+	void applyCustomFilter(double* kernel, int w, int h, int button_val);
 
 
 // Attributes

@@ -407,6 +407,10 @@ void ImpressionistUI::cb_color_chooser(Fl_Widget* o, void* v)
 }
 
 //Customize Filter
+void ImpressionistUI::cb_FilterButtonVal(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nButtonVal = ((Fl_Light_Button*)o)->value();
+}
 
 void ImpressionistUI::cb_filter_size(Fl_Menu_* o, void* v)
 {
@@ -433,42 +437,49 @@ void ImpressionistUI::cb_applyFilter(Fl_Widget* o, void* v)
 		{
 			int pixel = i * pUI->m_nKernelW + j;
 			double weight = atof(pUI->m_EntryInputs[pixel]->value());
-			//cout << weight << endl;
+
 			kernel[pixel] = weight;
 		}
 	}
+	int button_val = pUI->m_nButtonVal;
+	//cout << button_val << endl;
 
-	pUI->getDocument()->applyCustomFilter(kernel, pUI->m_nKernelW, pUI->m_nKernelH);
+	pUI->getDocument()->applyCustomFilter(kernel, pUI->m_nKernelW, pUI->m_nKernelH, button_val);
 	pUI->m_paintView->refresh();
+
 
 }
 
 void ImpressionistUI::ShowFilterEntryValue(int width, int height)
 {
-		int dialog_w = width * 30 + (width + 1) * 10 + 20;
-		int dialog_h = height * 20 + (height + 1) * 10 + 40;
-		m_filterEntryValueWindow = new Fl_Window(dialog_w, dialog_h, "Filter Entry Value");
-		m_filterEntryValueWindow->user_data((void*)(this));
-		for (int i = 1; i <= height; ++i)
+	int dialog_w = width * 30 + (width + 1) * 10 + 40;
+	int dialog_h = height * 20 + (height + 1) * 10 + 60;
+	m_filterEntryValueWindow = new Fl_Window(dialog_w, dialog_h, "Filter Entry Value");
+	m_filterEntryValueWindow->user_data((void*)(this));
+	for (int i = 1; i <= height; ++i)
+	{
+		for (int j = 1; j <= width; ++j)
 		{
-			for (int j = 1; j <= width; ++j)
-			{
-				Fl_Float_Input* input = new Fl_Float_Input(j * 10 + (j - 1) * 30, i * 10 + (i - 1) * 20, 30, 20, "");
-				input->value("1.0");
-				m_EntryInputs.push_back(input);
-			}
+			Fl_Float_Input* input = new Fl_Float_Input(j * 10 + (j - 1) * 30, i * 10 + (i - 1) * 20, 30, 20, "");
+			input->value("1.0");
+			m_EntryInputs.push_back(input);
 		}
+	}
 
 
-		m_filterApply = new Fl_Button(dialog_w / 2 , dialog_h - 30, 40, 20, "Apply");
-		m_filterApply->user_data((void*)(this));
-		m_filterApply->callback(cb_applyFilter);
+	m_filterApply = new Fl_Button(dialog_w / 2 - 30, dialog_h - 30, 40, 20, "Apply");
+	m_filterApply->user_data((void*)(this));
+	m_filterApply->callback(cb_applyFilter);
+
+	m_filterNomalize = new Fl_Light_Button(dialog_w / 2 - 30, dialog_h - 60, 80, 20, "Nomalize");
+	m_filterNomalize->user_data((void*)(this));
+	m_filterNomalize->callback(cb_FilterButtonVal);
 
 
-		m_filterEntryValueWindow->end();
-		m_filterEntryValueWindow->show();
-		m_nKernelH = height;
-		m_nKernelW = width;
+	m_filterEntryValueWindow->end();
+	m_filterEntryValueWindow->show();
+	m_nKernelH = height;
+	m_nKernelW = width;
 
 };
 

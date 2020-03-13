@@ -231,20 +231,38 @@ void	ImpressionistDoc::rightEnd(Point target) {
 
 
 
-void ImpressionistDoc::applyCustomFilter(double* kernel, int w, int h)
+void ImpressionistDoc::applyCustomFilter(double* kernel, int w, int h, int button_val)
 {
 	m_pUI->m_paintView->refresh();
 	FilterCustomize customizedFilter(kernel, w, h);
 	GLubyte* target = new GLubyte[m_nWidth * m_nHeight * 3];
 	memset(target, 0, sizeof(target));
+	if (button_val == 1)
+	{
 	for (int i = 0; i < m_nHeight; ++i)
 	{
 		for (int j = 0; j < m_nWidth; ++j)
 		{
 			int pixelPos = (i * m_nWidth + j) * 3;
-			target[pixelPos] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 0);
-			target[pixelPos + 1] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 1);
-			target[pixelPos + 2] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 2);
+
+				target[pixelPos] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 0);
+				target[pixelPos + 1] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 1);
+				target[pixelPos + 2] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 2);
+		}
+
+		}
+	}
+	else
+	{
+		for (int i = 0; i < m_nHeight; ++i)
+		{
+			for (int j = 0; j < m_nWidth; ++j)
+			{
+				int pixelPos = (i * m_nWidth + j) * 3;
+				target[pixelPos] = (GLubyte)customizedFilter.applyCustomizedFilter1(m_ucBitmap, j, i, m_nWidth, m_nHeight, 0);
+				target[pixelPos + 1] = (GLubyte)customizedFilter.applyCustomizedFilter1(m_ucBitmap, j, i, m_nWidth, m_nHeight, 1);
+				target[pixelPos + 2] = (GLubyte)customizedFilter.applyCustomizedFilter1(m_ucBitmap, j, i, m_nWidth, m_nHeight, 2);
+			}
 		}
 	}
 	m_ucPainting = target;
@@ -394,7 +412,7 @@ void	ImpressionistDoc::autoPaint() {
 	int space = m_pUI->getAutoSpace();
 	int width = m_nWidth;
 	int height = m_nHeight;
-	cout << size << ' ' << space << ' ' << width << ' ' << height << endl;
+	//cout << size << ' ' << space << ' ' << width << ' ' << height << endl;
 	ImpBrush* brush = m_pCurrentBrush;
 	int rowNum = width / space;
 	int colNum = height / space;
@@ -407,7 +425,7 @@ void	ImpressionistDoc::autoPaint() {
 				int y = 1 + j * space;
 				Point a(x, y);
 				//Point b(x,y);
-				cout << x << ' ' << y << endl;
+				//cout << x << ' ' << y << endl;
 				if (x == 1 && y == 1)
 					brush->BrushBegin(a, a, 0);
 				else

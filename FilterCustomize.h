@@ -13,7 +13,7 @@ public:
 	FilterCustomize();
 
 	double applyCustomizedFilter(GLubyte* Bitmap, int target_x, int target_y, int Width, int Height, int k);
-
+	double applyCustomizedFilter1(GLubyte* Bitmap, int target_x, int target_y, int Width, int Height, int k);
 	
 	double* kernel;
 	int width;

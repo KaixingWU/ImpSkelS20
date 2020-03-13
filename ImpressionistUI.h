@@ -49,6 +49,7 @@ public:
 
 	Fl_Window* m_filterWindow;
 	Fl_Button* m_filterApply;
+	Fl_Light_Button* m_filterNomalize;
 	Fl_Int_Input* m_filterWidth;
 	Fl_Int_Input* m_filterHeight;
 	Fl_Window* m_filterEntryValueWindow;
@@ -116,6 +117,7 @@ private:
 	int		m_nAutoSpace;
 	int     m_nKernelH;
 	int		m_nKernelW;
+	int     m_nButtonVal;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -151,6 +153,7 @@ private:
 	static void cb_filter_check_size(Fl_Widget* o, void* v);
 	static void cb_applyFilter(Fl_Widget* o, void* v);
 	static void cb_filter_size(Fl_Menu_* o, void* v);
+	static void cb_FilterButtonVal(Fl_Widget* o, void* v);
 
 	static void cb_autoSpaceSlides(Fl_Widget* o, void* v);
 	static void	cb_autoSpaceRand(Fl_Widget* o, void* v);

@@ -46,3 +46,29 @@ double FilterCustomize::applyCustomizedFilter(GLubyte* Bitmap, int target_x, int
 	return value/sum_weight;
 }
 
+double FilterCustomize::applyCustomizedFilter1(GLubyte* Bitmap, int target_x, int target_y, int Width, int Height, int k)
+{
+
+	// Paint from left lower corner
+	int startX = target_x - width / 2;
+	int startY = target_y - height / 2;
+	double value = 0.0;
+	for (int i = 0; i < width;i++)
+	{
+		const int currentX = i + startX;
+		if (currentX < 0 || currentX >= Width) continue;
+
+		for (int j = 0; j < height;j++)
+		{
+			const int currentY = j + startY;
+			if (currentY < 0 || currentY >= Height) continue;
+
+			value += kernel[j * width + i] * (double)(Bitmap[(currentY * Width + currentX) * 3 + k]);
+
+
+		}
+	}
+	
+
+	return value;
+}
