@@ -20,6 +20,8 @@
 #include "CirclesBrush.h"
 #include "ScatteredLinesBrush.h"
 #include "ScatteredPointsBrush.h"
+#include "StarBrush.h"
+#include "BlurFilterBrush.h"
 
 #define DESTROY(p)	{  if ((p)!=NULL) {delete [] p; p=NULL; } }
 
@@ -48,6 +50,8 @@ ImpressionistDoc::ImpressionistDoc()
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_POINTS] = new ScatteredPointsBrush(this, "Scattered Points");
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_LINES] = new ScatteredLinesBrush(this, "Scattered Lines");
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_CIRCLES] = new ScatteredCirclesBrush(this, "Scattered Circles");
+	ImpBrush::c_pBrushes[BRUSH_STAR] = new StarBrush(this, "Stars");
+	ImpBrush::c_pBrushes[BRUSH_BLUR_FILTER] = new BlurFilterBrush(this, "Filter Blur");
 
 	//filter
 	/*Gaussian_filter[0][0] = 1;
@@ -221,6 +225,41 @@ void	ImpressionistDoc::rightEnd(Point target) {
 	rightEndPoint = target;
 }
 
+
+
+void ImpressionistDoc::applyCustomFilter(double* kernel, int w, int h)
+{
+	/*m_pUI->m_paintView->refresh();
+	FilterCustomize customizedFilter(kernel, w, h);
+	GLubyte* target = new GLubyte[m_nWidth * m_nHeight * 3];
+	memset(target, 0, sizeof(target));
+	for (int i = 0; i < m_nHeight; ++i)
+	{
+		for (int j = 0; j < m_nWidth; ++j)
+		{
+			int pixelPos = (i * m_nWidth + j) * 3;
+			target[pixelPos] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 0);
+			target[pixelPos + 1] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 1);
+			target[pixelPos + 2] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 2);
+		}
+	}
+	m_ucPainting = target;*/
+	m_pUI->m_paintView->refresh();
+	FilterCustomize customizedFilter(kernel, w, h);
+	GLubyte* tar = new GLubyte[m_nWidth * m_nHeight * 3];
+	memset(tar, 0, sizeof(tar));
+	for (int i = 0; i < m_nHeight; ++i)
+	{
+		for (int j = 0; j < m_nWidth; ++j)
+		{
+			int pixelPos = (i * m_nWidth + j) * 3;
+			tar[pixelPos] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 0);
+			tar[pixelPos + 1] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 1);
+			tar[pixelPos + 2] = (GLubyte)customizedFilter.applyCustomizedFilter(m_ucBitmap, j, i, m_nWidth, m_nHeight, 2);
+		}
+	}
+	m_ucPainting = tar;
+}
 
 //---------------------------------------------------------
 // Load the specified image

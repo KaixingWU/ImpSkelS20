@@ -140,7 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bitmap.cpp" />
+    <ClCompile Include="BlurFilterBrush.cpp" />
     <ClCompile Include="CirclesBrush.cpp" />
+    <ClCompile Include="FilterCustomize.cpp" />
     <ClCompile Include="ImpBrush.cpp" />
     <ClCompile Include="Impressionist.cpp" />
     <ClCompile Include="ImpressionistDoc.cpp" />
@@ -152,10 +154,13 @@
     <ClCompile Include="ScatteredCirclesBrush.cpp" />
     <ClCompile Include="ScatteredLinesBrush.cpp" />
     <ClCompile Include="ScatteredPointsBrush.cpp" />
+    <ClCompile Include="StarBrush.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bitmap.h" />
+    <ClInclude Include="BlurFilterBrush.h" />
     <ClInclude Include="CirclesBrush.h" />
+    <ClInclude Include="FilterCustomize.h" />
     <ClInclude Include="ImpBrush.h" />
     <ClInclude Include="impressionist.h" />
     <ClInclude Include="impressionistDoc.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="ScatteredCirclesBrush.h" />
     <ClInclude Include="ScatteredLinesBrush.h" />
     <ClInclude Include="ScatteredPointsBrush.h" />
+    <ClInclude Include="StarBrush.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="impressionist.rc" />

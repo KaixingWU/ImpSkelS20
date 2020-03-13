@@ -298,6 +298,7 @@ void ImpressionistUI::cb_StrokeDirectionChoice(Fl_Widget* o, void* v)
 }
 
 
+
 //------------------------------------------------------------
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas button is pushed
@@ -377,12 +378,80 @@ void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
 	((ImpressionistUI*)(o->user_data()))->m_nAlpha = res1;
 }
 
+//Color choice
 void ImpressionistUI::cb_color_chooser(Fl_Widget* o, void* v)
 {
 	((ImpressionistUI*)(o->user_data()))->m_nColorR = ((Fl_Color_Chooser*)o)->r();
 	((ImpressionistUI*)(o->user_data()))->m_nColorG = ((Fl_Color_Chooser*)o)->g();
 	((ImpressionistUI*)(o->user_data()))->m_nColorB = ((Fl_Color_Chooser*)o)->b();
 }
+
+//Customize Filter
+
+void ImpressionistUI::cb_filter_size(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_filterWindow->show();
+}
+void ImpressionistUI::cb_filter_check_size(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = (ImpressionistUI*)o->user_data();
+	int w = atoi((pUI->m_filterWidth->value()));
+	int h = atoi((pUI->m_filterHeight->value()));
+	w = w > 1 ? w : 1;
+	h = h > 1 ? h : 1;
+	pUI->ShowFilterEntryValue(w, h);
+	pUI->m_filterWindow->hide();
+}
+
+void ImpressionistUI::cb_applyFilter(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = (ImpressionistUI*)o->user_data();
+	double* kernel = new double[pUI->m_nKernelH * pUI->m_nKernelW];
+	for (int i = 0; i < pUI->m_nKernelH; ++i)
+	{
+		for (int j = 0; j < pUI->m_nKernelW; ++j)
+		{
+			int pixel = i * pUI->m_nKernelW + j;
+			double weight = atof(pUI->m_EntryInputs[pixel]->value());
+			//cout << weight << endl;
+			kernel[pixel] = weight;
+		}
+	}
+
+	pUI->getDocument()->applyCustomFilter(kernel, pUI->m_nKernelW, pUI->m_nKernelH);
+	pUI->m_paintView->refresh();
+
+}
+
+void ImpressionistUI::ShowFilterEntryValue(int width, int height)
+{
+		int dialog_w = width * 30 + (width + 1) * 10 + 20;
+		int dialog_h = height * 20 + (height + 1) * 10 + 40;
+		m_filterEntryValueWindow = new Fl_Window(dialog_w, dialog_h, "Filter Entry Value");
+		m_filterEntryValueWindow->user_data((void*)(this));
+		for (int i = 1; i <= height; ++i)
+		{
+			for (int j = 1; j <= width; ++j)
+			{
+				Fl_Float_Input* input = new Fl_Float_Input(j * 10 + (j - 1) * 30, i * 10 + (i - 1) * 20, 30, 20, "");
+				input->value("1.0");
+				m_EntryInputs.push_back(input);
+			}
+		}
+
+
+		m_filterApply = new Fl_Button(dialog_w / 2 , dialog_h - 30, 40, 20, "Apply");
+		m_filterApply->user_data((void*)(this));
+		m_filterApply->callback(cb_applyFilter);
+
+
+		m_filterEntryValueWindow->end();
+		m_filterEntryValueWindow->show();
+		m_nKernelH = height;
+		m_nKernelW = width;
+
+};
+
 
 //---------------------------------- per instance functions --------------------------------------
 
@@ -515,7 +584,7 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 
 		{ "&Colors",       FL_ALT + 'k', (Fl_Callback*)ImpressionistUI::cb_colors},
 		{ "&Paintly",      FL_ALT + 'p', (Fl_Callback*)ImpressionistUI::cb_paintly, 0, FL_MENU_DIVIDER},
-
+		{ "&Define Filter", FL_ALT + 'e', (Fl_Callback*)ImpressionistUI::cb_filter_size, 0, FL_MENU_DIVIDER},
 		{ "&Load another image", FL_ALT + 'a', (Fl_Callback*)ImpressionistUI::cb_load_another_image, 0, FL_MENU_DIVIDER},
 
 		{ "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
@@ -536,6 +605,8 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {"Scattered Points",	FL_ALT+'q', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_POINTS},
   {"Scattered Lines",	FL_ALT+'m', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_LINES},
   {"Scattered Circles",	FL_ALT+'d', (Fl_Callback *)ImpressionistUI::cb_brushChoice, (void *)BRUSH_SCATTERED_CIRCLES},
+   {"Stars",			FL_ALT + 's', (Fl_Callback*)ImpressionistUI::cb_brushChoice, (void*)BRUSH_STAR},
+   {"Filter Blur",			FL_ALT + 'b', (Fl_Callback*)ImpressionistUI::cb_brushChoice, (void*)BRUSH_BLUR_FILTER},
   {0}
 };
 
@@ -743,5 +814,19 @@ ImpressionistUI::ImpressionistUI() {
 	m_colorChooser->rgb(m_nColorR, m_nColorG, m_nColorB);
 	m_colorChooser->callback(cb_color_chooser);
 	m_colorDialog->end();
+
+	m_filterWindow = new Fl_Window(300, 80, "Filter");
+	m_filterWidth = new Fl_Int_Input(80, 10, 50, 20, "Width");
+	m_filterWidth->labelfont(FL_COURIER);
+	m_filterWidth->labelsize(12);
+	m_filterWidth->value("1");
+	m_filterHeight = new Fl_Int_Input(180, 10, 60, 20, "Height");
+	m_filterHeight->labelfont(FL_COURIER);
+	m_filterHeight->labelsize(12);
+	m_filterHeight->value("1");
+	m_filterCheck = new Fl_Button(120, 40, 80, 20, "&Check");
+	m_filterCheck->user_data((void*)(this));
+	m_filterCheck->callback(cb_filter_check_size);
+	m_filterWindow->end();
 
 }

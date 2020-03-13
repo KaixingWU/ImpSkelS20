@@ -16,6 +16,10 @@
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Light_Button.H>
 #include <FL/Fl_Color_Chooser.H>
+#include <FL/Fl_Int_Input.H>
+#include <FL/Fl_Float_Input.H>
+#include <vector>
+
 
 
 #include "Impressionist.h"
@@ -42,6 +46,14 @@ public:
 
 	Fl_Window* m_colorDialog;
 	Fl_Color_Chooser* m_colorChooser;
+
+	Fl_Window* m_filterWindow;
+	Fl_Button* m_filterApply;
+	Fl_Int_Input* m_filterWidth;
+	Fl_Int_Input* m_filterHeight;
+	Fl_Window* m_filterEntryValueWindow;
+	Fl_Button* m_filterCheck;
+	std::vector<Fl_Float_Input*> m_EntryInputs;
 
 	Fl_Slider* m_BrushSizeSlider;
 	Fl_Slider* m_BrushLineWidthSlider;
@@ -98,6 +110,8 @@ private:
 	bool	m_bEdgeClipping;
 	int		m_nEdgeThreshold;
 	int		m_nAutoSpace;
+	int     m_nKernelH;
+	int		m_nKernelW;
 
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -130,6 +144,11 @@ private:
 	static void cb_lineAngleSlides(Fl_Widget* o, void* v);
 	static void cb_alphaSlides(Fl_Widget* o, void* v);
 	static void cb_color_chooser(Fl_Widget* o, void* v);
+	static void cb_filter_check_size(Fl_Widget* o, void* v);
+	static void cb_applyFilter(Fl_Widget* o, void* v);
+	static void cb_filter_size(Fl_Menu_* o, void* v);
+
+	void ShowFilterEntryValue(int width, int height);
 
 	
 };

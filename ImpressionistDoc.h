@@ -9,6 +9,7 @@
 
 #include "impressionist.h"
 #include "bitmap.h"
+#include "FilterCustomize.h"
 
 class ImpressionistUI;
 
@@ -50,6 +51,8 @@ public:
 	void	setSize(int size);				// set the UI size
 	char* getImageName();					// get the current image name
 	void	setPicIntensity();
+
+	void applyCustomFilter(double* kernel, int w, int h);
 
 
 // Attributes

@@ -28,7 +28,7 @@ void CirclesBrush::BrushMove(const Point source, const Point target, int Directi
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	if (pDoc == NULL) {
-		printf("PointBrush::BrushMove  document is NULL\n");
+		printf("CirclesBrush::BrushMove  document is NULL\n");
 		return;
 	}
 
@@ -72,6 +72,7 @@ void CirclesBrush::DrawCircle(const Point source, const Point target)
     }
 
     glEnd();
+    delete [] circleVertex;
    
 }
 

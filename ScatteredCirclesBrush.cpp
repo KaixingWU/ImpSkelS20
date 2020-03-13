@@ -33,7 +33,7 @@ void ScatteredCirclesBrush::BrushMove(const Point source, const Point target, in
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	if (pDoc == NULL) {
-		printf("PointBrush::BrushMove  document is NULL\n");
+		printf("ScatteredCirclesBrush::BrushMove  document is NULL\n");
 		return;
 	}
 

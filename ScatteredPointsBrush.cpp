@@ -28,7 +28,7 @@ void ScatteredPointsBrush::BrushMove(const Point source, const Point target, int
 	ImpressionistUI* dlg = pDoc->m_pUI;
 	Blend();
 	if (pDoc == NULL) {
-		printf("PointBrush::BrushMove  document is NULL\n");
+		printf("ScatteredPointsBrush::BrushMove  document is NULL\n");
 		return;
 	}
 
